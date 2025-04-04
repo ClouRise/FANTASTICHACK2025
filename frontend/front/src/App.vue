@@ -1,7 +1,7 @@
 <template>
   <div class="app">
     <header>
-
+      <a href="">Характеристики</a>
     </header>
     <main>
       <player fillColor="#ffffff" txt="3"></player>
@@ -23,26 +23,23 @@ export default {
 .app{
   width: 100%;
   height: 100%;
-  overflow: none;
-  position: fixed;
-  display: grid;
-  grid: 70px auto / 100%
 }
 header{
-  background-color: #42424A;
-  box-shadow: 0px 4px 4px 0 black;
+  background-color: #1F1F1F;
+  height: 70px;
+  padding-inline: 70px;
+  display: flex;
+  justify-content: start;
+  align-items: center;
 }
 main{
-  background-color: aqua;
-  background-image: url(./assets/img/bg.jpeg);
-  background-size: cover;
+
 }
-main::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  background: #4E505666; 
-  width: 100%;
-  height: 100%;
+header a{
+  font-family: ubuntu-bold;
+  color: white;
+  font-size: 18px;
+  text-decoration: none;
 }
+
 </style>
