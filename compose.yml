@@ -4,7 +4,7 @@ networks:
 services:
   frontend:
     build:
-      context: ./Frontend/front/
+      context: ./frontend/front/
       dockerfile: Dockerfile
     networks:
       - net
@@ -19,5 +19,4 @@ services:
       - frontend
     networks:
       - net
-  
   
