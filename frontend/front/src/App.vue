@@ -4,7 +4,7 @@
 
     </header>
     <main>
-      <player></player>
+      <player fillColor="#ffffff" txt="3"></player>
     </main>
   </div>
 </template>
