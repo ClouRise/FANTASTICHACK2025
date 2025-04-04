@@ -45,6 +45,7 @@
             align-items: center;
             justify-content: center;
             padding: 35px;
+            padding-block: 18px;
             box-sizing: border-box;
         }
     </style>

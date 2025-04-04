@@ -57,7 +57,7 @@
                 <td><p>15%</p></td>
                 <td><p>15%</p></td>
             </tr>
-            <tr>
+            <tr style="border: none;">
                 <td><titlerow num="6"></titlerow></td>
                 <td><p>15%</p></td>
                 <td><p>15%</p></td>
