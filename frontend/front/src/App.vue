@@ -31,9 +31,14 @@ header{
   display: flex;
   justify-content: start;
   align-items: center;
+  background-image: url(./assets/img/doritos-bg.svg);
+  background-repeat: no-repeat;
+  background-position-x: right;
 }
 main{
-
+  background-image: url(./assets/img/bg-top.svg);
+  background-position-y: -60px;
+  background-repeat: no-repeat;
 }
 header a{
   font-family: ubuntu-bold;
