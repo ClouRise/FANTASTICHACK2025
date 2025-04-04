@@ -4,7 +4,7 @@
       <a href="">Характеристики</a>
     </header>
     <main>
-      <player fillColor="#ffffff" txt="3"></player>
+      <player fillColor="#ff0000" txt="3"></player>
     </main>
   </div>
 </template>
