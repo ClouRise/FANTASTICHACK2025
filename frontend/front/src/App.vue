@@ -47,6 +47,7 @@ main{
   background-image: url(./assets/img/bg-top.svg);
   background-position-y: -60px;
   background-repeat: no-repeat;
+  background-position-x: right;
 }
 header a{
   font-family: ubuntu-bold;
