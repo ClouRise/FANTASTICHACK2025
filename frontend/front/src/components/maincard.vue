@@ -45,7 +45,8 @@
             align-items: center;
             justify-content: center;
             padding: 35px;
-            padding-block: 18px;
+            padding-top: 5px;
+            padding-bottom: 20px;
             box-sizing: border-box;
         }
     </style>
