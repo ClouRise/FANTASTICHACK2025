@@ -1,11 +1,11 @@
     <template>
-        <div>
-            <header>
+        <div class="card">
+            <div class="header">
                <h2>{{ title }}</h2>
-            </header>
-            <main>
+            </div>
+            <div class="main">
                 <slot></slot>
-            </main>
+            </div>
         </div>
     </template>
     
@@ -21,5 +21,30 @@
     </script>
     
     <style scoped>
-    
+        .card{
+            display: flex;
+            flex-direction: column;
+        }
+        .header{
+            background-color: #2D2D2D;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: start;
+            padding-inline: 35px;
+        }
+        .header h2{
+            font-family: ubuntu-bold;
+            color: white;
+            font-size: 17px;
+        }
+        .main{
+            background-color: #1D1D1D;
+            border-radius: 0 0 15px 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 35px;
+            box-sizing: border-box;
+        }
     </style>

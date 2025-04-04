@@ -27,6 +27,5 @@
     height: 40px;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     color: white;
-    margin-bottom: 15px;
 }
 </style>

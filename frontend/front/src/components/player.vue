@@ -23,8 +23,8 @@
 
 <style scoped>
 .player{
-    width: 80px;
-    height: 80px;
+    width: 60px;
+    height: 60px;
     position: relative;
     display: flex;
     align-items: end;
@@ -33,16 +33,19 @@
 .bg{
     position: relative;
     top: -15px;
-    width: 70px;
+    width: 35px;
     height: 25px;
     background-color: rgb(0, 0, 0);
     border-radius: 5px;
     color: aliceblue;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
 }
 .txt{
-    font-size: 16pt;
+    font-size: 16px;
     text-align: center;
-    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif ;
+    font-family: ubuntu-medium;
 }
 </style>
