@@ -1,0 +1,23 @@
+networks:
+  net:
+
+services:
+  frontend:
+    build:
+      context: ./Frontend/front/
+      dockerfile: Dockerfile
+    networks:
+      - net
+    
+  nginx:
+    image: nginx:stable-alpine
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+    depends_on:
+      - frontend
+    networks:
+      - net
+  
+  
