@@ -1,16 +1,21 @@
-<script>
-</script>
-
 <template>
   <div class="app">
     <header>
 
     </header>
     <main>
-
+      <player></player>
     </main>
   </div>
 </template>
+
+<script>
+import { ref } from 'vue';
+
+
+export default {
+}
+</script>
 
 <style scoped>
 .app{
