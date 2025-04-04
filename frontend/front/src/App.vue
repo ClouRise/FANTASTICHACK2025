@@ -5,6 +5,12 @@
     </header>
     <main>
       <player fillColor="#ff0000" txt="3"></player>
+      <titlerow style="box-shadow: #EFDE22 0px 0px 5px 3px" num="1"></titlerow>
+      <titlerow style="box-shadow: #7A7A81 0px 0px 5px 3px" num="2"></titlerow>
+      <titlerow style="box-shadow: #FF77004D 0px 0px 5px 3px" num="3"></titlerow>
+      <titlerow num="4"></titlerow>
+      <titlerow num="5"></titlerow>
+      <titlerow num="6"></titlerow>
     </main>
   </div>
 </template>
@@ -12,9 +18,11 @@
 <script>
 
 import player from './components/player.vue';
+import titlerow from './components/titlerow.vue'
 export default {
   components: {
-    player
+    player,
+    titlerow
   }
 }
 </script>
