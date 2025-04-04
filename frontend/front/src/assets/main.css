@@ -3,3 +3,15 @@
   padding: 0;
   box-sizing: border-box;
 }
+@font-face {
+  font-family: ubuntu-bold;
+  src: url(./fonts/ubuntu/Ubuntu-Bold.ttf);
+}
+@font-face {
+  font-family: ubuntu-medium;
+  src: url(./fonts/ubuntu/Ubuntu-Medium.ttf);
+}
+@font-face {
+  font-family: ubuntu-regular;
+  src: url(./fonts/ubuntu/Ubuntu-Regular.ttf);
+}
