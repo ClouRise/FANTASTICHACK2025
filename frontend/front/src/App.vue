@@ -10,10 +10,12 @@
 </template>
 
 <script>
-import { ref } from 'vue';
 
-
+import player from './components/player.vue';
 export default {
+  components: {
+    player
+  }
 }
 </script>
 
