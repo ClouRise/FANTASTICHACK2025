@@ -38,6 +38,7 @@ import doublecard from './components/doublecard.vue';
 import raceMap from './components/raceMap.vue';
 import modalwindow from './components/modalwindow.vue';
 import axios from 'axios';
+import store from './store';
 export default {
   data() {
     return {
@@ -55,7 +56,8 @@ export default {
       },
       winner: null,
       cancelTokenSource: null,
-      eventSource: null
+      eventSource: null,
+      finalRes: {}
     }
   },
   components: {
@@ -92,7 +94,9 @@ export default {
             const data = JSON.parse(event.data);
             this.currentTime = data.time;
             this.racers = data.racers;
+            this.finalRes = data.final_results;
 
+            store.commit('setGlobalData', data);
             if (data.winner && !this.winner) {
               this.winner = data.winner;
             }
@@ -153,6 +157,16 @@ export default {
   },
   async beforeUnmount() {
     await this.stopRace();
+  },
+  watch: {
+    finalRes(){
+      if (this.finalRes != null){
+        var finres = {
+        }
+        console.log(this.finalRes)
+        console.log(finres)
+      }
+    }
   }
 }
 </script>

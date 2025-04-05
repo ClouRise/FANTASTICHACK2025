@@ -1,14 +1,17 @@
-
 import { createStore } from "vuex";
-import axios from 'axios'
 
 export default createStore({
   state: {
-
+    globalData: {}
   },
   mutations: {
+    setGlobalData(state, object){
+      state.globalData = object
+    }
   },
-  actions: {
-
-  },
+  getters: {
+    pushToLocaleStoarge(){
+      
+    }
+  }
 });
