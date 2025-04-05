@@ -30,10 +30,7 @@
         </maincard>
       </div>
     </main>
-    <button @click="fetchPosts">dsbds</button>
   </div>
-  <button @click="toggleRace">sdhsdhs</button>
-  <p>{{ racers }}</p>
 </template>
 
 <script>
@@ -162,6 +159,9 @@ export default {
 .app{
   width: 100%;
   height: 100%;
+  background-image: url(./assets/img/bg.jpg);
+  background-attachment: fixed;
+  background-size: 110%;
 }
 body{
   background-image: url(./assets/img/bg.jpeg);
