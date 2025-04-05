@@ -25,10 +25,11 @@
       <div class="row">
         <doublecard></doublecard>
 
-        <maincard style="width: 100%;" :buttonRace="true" :title="'Симуляция забега'">
-          <raceMap></raceMap>
+        <maincard v-on:toggle-race="toggleRace" style="width: 100%;" :buttonRace="true" :title="'Симуляция забега'">
+          <raceMap :racers="racers"></raceMap>
         </maincard>
       </div>
+      {{ racers }}
     </main>
   </div>
 </template>

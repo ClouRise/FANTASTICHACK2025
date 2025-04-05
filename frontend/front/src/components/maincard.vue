@@ -2,7 +2,7 @@
         <div class="card">
             <div :style="buttonRace ? 'justify-content: space-between;' : 'justify-content: start;'" class="header">
                 <h2>{{ title }}</h2>
-                <button v-if="buttonRace">Старт</button>
+                <button @click="$emit('toggleRace')" v-if="buttonRace">Старт</button>
             </div>
             <div class="main">
                 <slot></slot>
