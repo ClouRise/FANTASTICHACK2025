@@ -24,6 +24,10 @@
 
       <div class="row">
         <doublecard></doublecard>
+
+        <maincard style="width: 100%;" :buttonRace="true" :title="'Симуляция забега'">
+          <raceMap></raceMap>
+        </maincard>
       </div>
     </main>
     <button @click="fetchPosts">dsbds</button>
@@ -38,6 +42,7 @@ import maincard from './components/maincard.vue';
 import tableCard from './components/tableCard.vue';
 import analys from './components/analys.vue';
 import doublecard from './components/doublecard.vue';
+import raceMap from './components/raceMap.vue';
 import axios from 'axios';
 export default {
   data(){
@@ -51,7 +56,8 @@ export default {
     maincard,
     tableCard,
     analys,
-    doublecard
+    doublecard,
+    raceMap
   },
   methods: {
     async fetchPosts() {
@@ -72,6 +78,10 @@ export default {
 .app{
   width: 100%;
   height: 100%;
+}
+body{
+  background-image: url(./assets/img/bg.jpeg);
+  filter: brightness(60%);
 }
 header{
   background-color: #1F1F1F;

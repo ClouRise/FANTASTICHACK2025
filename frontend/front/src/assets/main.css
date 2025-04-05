@@ -15,3 +15,7 @@
   font-family: ubuntu-regular;
   src: url(./fonts/ubuntu/Ubuntu-Regular.ttf);
 }
+@font-face {
+  font-family: rubicDirt;
+  src: url(./fonts/rubicDirt/RubikDirt-Regular.ttf);
+}
