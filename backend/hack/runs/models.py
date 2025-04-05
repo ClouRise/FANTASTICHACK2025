@@ -32,7 +32,7 @@ class Person(models.Model):
         max_digits=2,
         decimal_places=1,
         validators=[
-            MinValueValidator(-5.0),
+            MinValueValidator(-2.1),
             MaxValueValidator(0.1),
         ],
     )
