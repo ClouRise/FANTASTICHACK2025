@@ -5,7 +5,6 @@
             <p>Топ 1</p>
             <playerselector 
             :players="players"
-            @selected="handleFirstPlayerSelect"
             class="selector"
           />
         </div>
@@ -15,7 +14,6 @@
             <p>Топ 2</p>
             <playerselector 
             :players="players"
-            @selected="handleSecondPlayerSelect"
             class="selector"
           />
         </div>
@@ -44,14 +42,6 @@
         ]
       }
     },
-    methods: {
-      handleFirstPlayerSelect(player) {
-        console.log('Первый игрок:', player)
-      },
-      handleSecondPlayerSelect(player) {
-        console.log('Второй игрок:', player)
-      }
-    }
   }
   </script>
   
