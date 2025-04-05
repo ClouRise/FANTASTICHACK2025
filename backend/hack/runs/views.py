@@ -9,6 +9,59 @@ from django.db.models import Count
 from django.core.cache import cache
 from django.utils import timezone
 from rest_framework.decorators import api_view
+from django.views.decorators.csrf import csrf_exempt
+from django.core.exceptions import ValidationError
+class PersonAPI(View):
+    def get(self, request):
+        persons = list(Person.objects.all().values(
+            'id',
+            'time_of_reaction',
+            'acceleration',
+            'max_speed',
+            'coef',
+            'color'
+        ))
+        return JsonResponse({'persons': persons}, safe=False)
+
+    @csrf_exempt
+    def dispatch(self, *args, **kwargs):
+        return super().dispatch(*args, **kwargs)
+
+    def put(self, request, person_id):
+        try:
+            person = Person.objects.get(pk=person_id)
+            data = json.loads(request.body)
+            
+
+            allowed_fields = ['time_of_reaction', 'acceleration', 'max_speed', 'coef', 'color']
+            for field in allowed_fields:
+                if field in data:
+                    setattr(person, field, data[field])
+            
+            person.full_clean()
+            person.save()
+            
+            return JsonResponse({
+                'status': 'success',
+                'message': f'Данные участника {person_id} обновлены'
+            })
+        
+        except Person.DoesNotExist:
+            return JsonResponse(
+                {'error': f'Участник с ID {person_id} не найден'},
+                status=404
+            )
+        except ValidationError as e:
+            return JsonResponse(
+                {'error': 'Ошибка валидации', 'details': str(e)},
+                status=400
+            )
+        except Exception as e:
+            return JsonResponse(
+                {'error': 'Ошибка сервера', 'details': str(e)},
+                status=500
+            )
+
 class RaceSimulationView(View):
     def _get_cached_probabilities(self):
         cache_key = 'race_probabilities_cache'
