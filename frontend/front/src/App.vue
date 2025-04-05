@@ -29,7 +29,6 @@
           <raceMap :racers="racers"></raceMap>
         </maincard>
       </div>
-      {{ racers }}
     </main>
   </div>
 </template>
@@ -51,7 +50,9 @@ export default {
       loading: false,
       error: null,
       currentTime: 0,
-      racers: {},
+      racers: {
+        "1": {"distance": 0, },
+      },
       winner: null,
       cancelTokenSource: null,
       eventSource: null

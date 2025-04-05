@@ -4,9 +4,6 @@ from django.http import StreamingHttpResponse, JsonResponse, HttpResponse #дл�
 from django.views import View
 from .models import Person, Result
 import time
-from rest_framework import viewsets
-from .serializers import PersonSerializer
-
 class RaceSimulationView(View):
     def get(self, request):
         try:
@@ -159,7 +156,3 @@ def get_persons(request):
     return JsonResponse({'persons': persons}, safe=False)
 
 
-class PersonViewSet(viewsets.ModelViewSet):
-    queryset = Person.objects.all()
-    serializer_class = PersonSerializer
-    http_method_names = ['get']  # Только чтение если нужно
