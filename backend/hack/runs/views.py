@@ -12,16 +12,39 @@ from rest_framework.decorators import api_view
 from django.views.decorators.csrf import csrf_exempt
 from django.core.exceptions import ValidationError
 class PersonAPI(View):
-    def get(self, request):
-        persons = list(Person.objects.all().values(
-            'id',
-            'time_of_reaction',
-            'acceleration',
-            'max_speed',
-            'coef',
-            'color'
-        ))
-        return JsonResponse({'persons': persons}, safe=False)
+    def get(self, request, person_id=None):
+        try:
+            if person_id is None:
+                persons = list(Person.objects.all().values(
+                    'id',
+                    'time_of_reaction',
+                    'acceleration',
+                    'max_speed',
+                    'coef',
+                    'color'
+                ))
+                return JsonResponse({'persons': persons}, safe=False)
+            else:
+                person = Person.objects.get(pk=person_id)
+                return JsonResponse({
+                    'id': person.id,
+                    'time_of_reaction': str(person.time_of_reaction),
+                    'acceleration': str(person.acceleration),
+                    'max_speed': str(person.max_speed),
+                    'coef': str(person.coef),
+                    'color': person.color
+                })
+        
+        except Person.DoesNotExist:
+            return JsonResponse(
+                {'error': f'Участник с ID {person_id} не найден'},
+                status=404
+            )
+        except Exception as e:
+            return JsonResponse(
+                {'error': 'Ошибка сервера', 'details': str(e)},
+                status=500
+            )
 
     @csrf_exempt
     def dispatch(self, *args, **kwargs):
@@ -32,7 +55,6 @@ class PersonAPI(View):
             person = Person.objects.get(pk=person_id)
             data = json.loads(request.body)
             
-
             allowed_fields = ['time_of_reaction', 'acceleration', 'max_speed', 'coef', 'color']
             for field in allowed_fields:
                 if field in data:
@@ -61,7 +83,6 @@ class PersonAPI(View):
                 {'error': 'Ошибка сервера', 'details': str(e)},
                 status=500
             )
-
 class RaceSimulationView(View):
     def _get_cached_probabilities(self):
         cache_key = 'race_probabilities_cache'
