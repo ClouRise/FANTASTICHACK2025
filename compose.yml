@@ -2,12 +2,23 @@ networks:
   net:
 
 services:
+  backend:
+    build: ./backend/hack/
+    command: gunicorn hack.wsgi:application --bind 0.0.0.0:8000
+    volumes:
+      - ./backend/hack:/app
+      - static_volume:/backend/hack/static
+      - media_volume:/backend/hack/media
+    restart: unless-stopped
+    networks:
+      - net
   frontend:
     build:
       context: ./frontend/front/
       dockerfile: Dockerfile
     networks:
       - net
+    restart: unless-stopped
     
   nginx:
     image: nginx:stable-alpine
@@ -17,6 +28,12 @@ services:
       - ./nginx.conf:/etc/nginx/nginx.conf
     depends_on:
       - frontend
+      - backend
     networks:
       - net
+    restart: unless-stopped
+
+volumes:
+  static_volume:
+  media_volume:
   

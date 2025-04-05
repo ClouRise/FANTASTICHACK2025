@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-0bdl$mlmo(p_qn8^x)v-1*t(pvouv7q47phigtj0$l76*i-oo=
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -43,6 +43,7 @@ INSTALLED_APPS = [
 ]
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
+    "http://87.228.76.2"
 ]
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
@@ -125,6 +126,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 STATIC_URL = 'static/'
+STATIC_ROOT = "/backend/hack/static"
+MEDIA_URL = "media/"
+MEDIA_ROOT = "/backend/hack/media"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
