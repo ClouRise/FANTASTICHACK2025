@@ -11,7 +11,7 @@
       <titlerow num="4"></titlerow>
       <titlerow num="5"></titlerow>
       <titlerow num="6"></titlerow> -->
-      <div style="display: grid; grid: 100% / 50% 50%" class="row">
+      <div style="" class="row">
         <maincard :title="'Номер игрока и вероятность по местам'">
           <tableCard></tableCard>
         </maincard>
@@ -44,6 +44,7 @@ import tableCard from './components/tableCard.vue';
 import analys from './components/analys.vue';
 import doublecard from './components/doublecard.vue';
 import raceMap from './components/raceMap.vue';
+import modalwindow from './components/modalwindow.vue';
 import axios from 'axios';
 export default {
   data(){

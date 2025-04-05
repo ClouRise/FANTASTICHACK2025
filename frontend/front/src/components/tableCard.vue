@@ -91,13 +91,13 @@ tr{
     border-bottom: 1pt solid rgb(46, 46, 46);
 }
 td{
-    padding-inline: 15px;
+    padding-inline: 14px;
     padding-block: 8px;
     font-family: ubuntu-regular;
     color: white;
 }
 th{
-    padding-inline: 15px;
+    padding-inline: 5px;
     padding-block: 8px;
     font-family: ubuntu-regular;
     color: white;

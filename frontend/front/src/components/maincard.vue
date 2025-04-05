@@ -52,9 +52,7 @@ export default {
     border-radius: 0 0 15px 15px;
     display: flex;
     align-items: center;
-    justify-content: center;
     padding: 10px;
-    padding-top: 10px;
     padding-bottom: 15px;
     box-sizing: border-box;
 }

@@ -1,11 +1,11 @@
 <template>
-    <div class="diagonal-container">
+        <div class="diagonal-container">
         <div class="diagonal-line"></div>
         <div class="num num-1">
-            <titlerow style="width: 30px; height: 30px; box-shadow: #EFDE22 0px 0px 5px 3px" num="1"></titlerow>
+            <titlerow style="width: 25px; height: 25px; border-radius: 8px; box-shadow: #EFDE22 0px 0px 3px 2px" num="1"></titlerow>
         </div>
         <div class="num num-2">
-            <titlerow style="width: 30px; height: 30px; box-shadow: #7A7A81 0px 0px 5px 3px" num="2"></titlerow>
+            <titlerow style="width: 25px; height: 25px; border-radius: 8px; box-shadow: #7A7A81 0px 0px 3px 2px" num="2"></titlerow>
         </div>
     </div>
 </template>
@@ -21,10 +21,11 @@ import titlerow from './titlerow.vue';
 
 <style scoped>
 .diagonal-container {
-  width: 80px;
-  height: 80px;
+  width: 60px;
+  height: 60px;
   position: relative;
   overflow: hidden; /* чтобы линия не выходила за границы */
+  display: absolute;
 }
 
 .diagonal-line {
@@ -47,13 +48,14 @@ import titlerow from './titlerow.vue';
 }
 
 .num-1 {
-  left: 8px;
-  bottom: 8px;
+  left: 5px;
+  bottom: 5px;
 }
 
 .num-2 {
-  right: 8px;
-  top: 8px;
+  right: 5px;
+  top: 5px;
 }
+
 
 </style>

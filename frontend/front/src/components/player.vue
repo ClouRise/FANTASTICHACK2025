@@ -18,23 +18,23 @@
         },
         size: {
             type: Number,
-            default: () => 60
+            default: () => 50
         },
         wcard: {
             type: Number,
-            default: () => 35
+            default: () => 30
         },
         hcard: {
             type: Number,
-            default: () => 25
+            default: () => 18
         },
         fontsize: {
             type: Number,
-            default: () => 16
+            default: () => 15
         },
         topminus: {
             type: Number,
-            default: () => -15
+            default: () => -10
         }
      }   
     }
