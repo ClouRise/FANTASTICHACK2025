@@ -115,26 +115,33 @@ class RaceSimulationView(View):
             return JsonResponse({'error': str(e)}, status=500)
 
 
-def result_stat(request):       #1 - id, 2 - место
+def result_stat(request):
     with open('n.json', 'r', encoding='utf-8') as file:
         data = json.load(file)
-        n = data[0]['n']
+        n = data[0]['n']  # Получаем количество итераций из JSON
 
         for _ in range(n):    
-            obj = Person.objects.values_list('pk', 'acceleration', 'max_speed')
-
-            vocabulary = {elem[0]: elem[1] + elem[2] + random.randint(-2, 2) for elem in obj}
-            vocabulary = sorted(vocabulary.items(), key=lambda x: (x[1], x[0]), reverse=True)
+            # Получаем всех участников с их характеристиками
+            participants = Person.objects.values_list('pk', 'acceleration', 'max_speed')
+            
+            # Рассчитываем результаты с небольшой случайной вариацией
+            results = {
+                person_id: float(accel) + float(max_speed) + random.randint(-2, 2)
+                for person_id, accel, max_speed in participants
+            }
+            
+            # Сортируем участников по результатам (лучший первый)
+            sorted_results = sorted(results.items(), key=lambda x: (-x[1], x[0]))
     
-            for row, place in zip(vocabulary, range(1, len(vocabulary) + 1)):
-                Result.objects.update_or_create(
-                    person=row[0],
-                    defaults={'value': place}
+            # Создаем новые записи Result для каждого участника
+            for position, (person_id, _) in enumerate(sorted_results, start=1):
+                Result.objects.create(
+                    person_id=person_id,
+                    value=position
                 )
-    
-def finisg_stat(request):
-    
-    
-    
-    
-
+        
+        return JsonResponse({
+            'status': 'success', 
+            'created': n * len(results),
+            'message': f'Создано {n * len(results)} новых записей Result'
+        })
