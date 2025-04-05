@@ -23,7 +23,9 @@
       </div>
 
       <div class="row">
-        <doublecard></doublecard>
+        <maincard :title="'Вероятность занять 1ое и 2ое места'">
+          <doublecard></doublecard>
+        </maincard>
 
         <maincard style="width: 100%;" :buttonRace="true" :title="'Симуляция забега'">
           <raceMap></raceMap>

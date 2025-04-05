@@ -1,78 +1,110 @@
 <template>
-      <maincard title="Вероятность занятия 1го и 2го места">
-        <div class="selectors-wrapper">
-          <div class="cont">
-            <p>Топ 1</p>
-            <playerselector 
-            :players="players"
-            class="selector"
-          />
-        </div>
+  <table>
+      <thead>
+          <tr>
+              <th><top12></top12></th>
+              <th><player fillColor="#ff0000" txt="1"></player></th>
+              <th><player fillColor="#5C7CFA" txt="2"></player></th>
+              <th><player fillColor="#FCC419" txt="3"></player></th>
+              <th><player fillColor="#94D82D" txt="4"></player></th>
+              <th><player fillColor="#CC5DE8" txt="5"></player></th>
+              <th><player fillColor="#FFFFFF" txt="6"></player></th>
+          </tr>
+      </thead>
+      <tbody>
+          <tr>
+              <td><player fillColor="#ff0000" txt="1"></player></td>
+              <td><p>15%</p></td>
+              <td><p>15%</p></td>
+              <td><p>15%</p></td>
+              <td><p>15%</p></td>
+              <td><p>15%</p></td>
+              <td><p>15%</p></td>
+          </tr>
+          <tr>
+              <td><player fillColor="#5C7CFA" txt="2"></player></td>
+              <td><p>15%</p></td>
+              <td><p>15%</p></td>
+              <td><p>15%</p></td>
+              <td><p>15%</p></td>
+              <td><p>15%</p></td>
+              <td><p>15%</p></td>
+          </tr>
+          <tr>
+              <td><player fillColor="#FCC419" txt="3"></player></td>
+              <td><p>15%</p></td>
+              <td><p>15%</p></td>
+              <td><p>15%</p></td>
+              <td><p>15%</p></td>
+              <td><p>15%</p></td>
+              <td><p>15%</p></td>
+          </tr>
+          <tr>
+              <td><player fillColor="#94D82D" txt="4"></player></td>
+              <td><p>15%</p></td>
+              <td><p>15%</p></td>
+              <td><p>15%</p></td>
+              <td><p>15%</p></td>
+              <td><p>15%</p></td>
+              <td><p>15%</p></td>
+          </tr>
+          <tr>
+              <td><player fillColor="#CC5DE8" txt="5"></player></td>
+              <td><p>15%</p></td>
+              <td><p>15%</p></td>
+              <td><p>15%</p></td>
+              <td><p>15%</p></td>
+              <td><p>15%</p></td>
+              <td><p>15%</p></td>
+          </tr>
+          <tr style="border: none;">
+              <td><player fillColor="#FFFFFF" txt="6"></player></td>
+              <td><p>15%</p></td>
+              <td><p>15%</p></td>
+              <td><p>15%</p></td>
+              <td><p>15%</p></td>
+              <td><p>15%</p></td>
+              <td><p>15%</p></td>
+          </tr>
+      </tbody>
+  </table>
+</template>
 
-        
-          <div class="cont">
-            <p>Топ 2</p>
-            <playerselector 
-            :players="players"
-            class="selector"
-          />
-        </div>
-        </div>
-      </maincard>
-  </template>
-  
-  <script>
-  import maincard from './maincard.vue'
-  import playerselector from './playerselector.vue'
-  
-  export default {
-    components: {
-      maincard,
-      playerselector
-    },
-    data() {
-      return {
-        players: [
-          { id: 1, number: 1, color: '#ff0000' },
-          { id: 2, number: 2, color: '#5C7CFA' },
-          { id: 3, number: 3, color: '#FCC419' },
-          { id: 4, number: 4, color: '#94D82D' },
-          { id: 5, number: 5, color: '#CC5DE8' },
-          { id: 6, number: 6, color: '#FFFFFF' }
-        ]
-      }
-    },
+<script>
+import titlerow from './titlerow.vue';
+import player from './player.vue';
+import top12 from './top12.vue';
+export default {
+  components: {
+      titlerow,
+      player,
+      top12
   }
-  </script>
-  
-  <style>
-  .double-card-container {
-    padding: 20px;
-    background: #1a1a1a;
-  }
-  
-  .selectors-wrapper {
-    display: flex;
-    gap: 40px;
-    justify-content: center;
-    padding: 20px;
-  }
-  
-  .selector {
-    transform: scale(0.9);
-    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-  
-  .selector:hover {
-    transform: scale(1);
-  }
-  .cont{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    font-size: 12pt;
-    color: white;
-  }
-  </style>
+}
+</script>
+
+<style scoped>
+table{
+  width: auto;
+  height: auto;
+  border-collapse: collapse;
+} 
+tr{
+  border-bottom: 1pt solid rgb(46, 46, 46);
+}
+td{
+  padding-inline: 15px;
+  padding-block: 8px;
+  font-family: ubuntu-regular;
+  color: white;
+}
+th{
+  padding-inline: 15px;
+  padding-block: 8px;
+  font-family: ubuntu-regular;
+  color: white;
+}
+p{
+  text-align: center;
+}
+</style>
