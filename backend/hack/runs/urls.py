@@ -1,6 +1,6 @@
 from django.urls import path
-from . import views
+from .views import RaceSimulationView
 
 urlpatterns = [
-    path('', views.home, name='home')
+    path('api/race/', RaceSimulationView.as_view(), name='race-stream'),
 ]
