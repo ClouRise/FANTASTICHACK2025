@@ -4,13 +4,11 @@ networks:
 services:
   backend:
     build: ./backend/hack/
-    command: sh -c "python -m gunicorn --workers 3 --bind 0.0.0.0:8000 hack.wsgi:application"
+    command: gunicorn hack.wsgi:application --bind 0.0.0.0:8000
     volumes:
       - ./backend/hack:/app
       - static_volume:/backend/hack/static
       - media_volume:/backend/hack/media
-    # env_file:
-    #   - .env
     restart: unless-stopped
     networks:
       - net
