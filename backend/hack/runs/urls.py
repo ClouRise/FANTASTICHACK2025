@@ -1,7 +1,7 @@
 from django.urls import path
 from .views import RaceSimulationView, result_stat
 from . import views
-from .views import get_persons, PersonViewSet
+from .views import get_persons
 
 
 urlpatterns = [
