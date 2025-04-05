@@ -1,7 +1,7 @@
 <template>
   <div class="app">
     <header>
-      <a href="">Характеристики</a>
+      <a href="#" @click.prevent="isModalOpen = true">Характеристики</a>
     </header>
     <main>
       <div class="row">
@@ -23,6 +23,12 @@
         <maincard :id="4" :title="'Вероятность занять 1ое и 2ое места'">
           <doublecard></doublecard>
         </maincard>
+      </div>
+      <div v-if="isModalOpen">
+        <div class="overlay" @click="closeModal"></div>
+        <div class="modal-container">
+          <modalwindow @close="closeModal" />
+        </div>
       </div>
     </main>
     <button @click="sendT">ewgsndf</button>
@@ -47,6 +53,7 @@ export default {
       isRacing: false,
       loading: false,
       error: null,
+      isModalOpen:false,
       currentTime: 0,
       racers: {
         "1": { "distance": 100, "speed": 0, "finished": true, "color": "#ff0000" },
@@ -69,25 +76,12 @@ export default {
     tableCard,
     analys,
     doublecard,
-    raceMap
+    raceMap,
+    modalwindow
   },
   methods: {
-    async sendT() {
-      try {
-        const response = await axios.post(`http://127.0.0.1:8000/api/persons/1`, {
-          time_of_reaction: 0.2,
-          acceleration: 4,
-          max_speed: 10,
-          coef: 0,
-        }
-        )
-        console.log(response.data)
-      } catch (e) {
-        console.log(e)
-        //alert("Error server");
-      } finally {
-        console.log('end fetch')
-      }
+    closeModal(){
+      this.isModalOpen = false;
     },
     async toggleRace() {
       if (this.isRacing) {
@@ -206,6 +200,7 @@ export default {
   background-image: url(./assets/img/bg.jpg);
   background-attachment: fixed;
   background-size: 110%;
+  position: relative;
 }
 
 body {
@@ -245,5 +240,23 @@ header a {
   display: flex;
   flex-direction: row;
   margin-bottom: 30px;
+}
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 10;
+}
+
+.modal-container {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 11;
+  max-height: 90vh;
 }
 </style>
