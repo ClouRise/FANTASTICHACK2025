@@ -7,6 +7,7 @@ import time
 from collections import defaultdict
 from django.db.models import Count
 from django.core.cache import cache
+from django.utils import timezone
 
 class RaceSimulationView(View):
     def _get_cached_probabilities(self):
@@ -19,7 +20,6 @@ class RaceSimulationView(View):
         return probabilities
 
     def _calculate_probabilities(self):
-        """Расчет вероятностей для каждого участника"""
         results = Result.objects.values('person', 'value').annotate(count=Count('value'))
         
         prob_dict = defaultdict(lambda: {1:0, 2:0, 3:0, 4:0, 5:0, 6:0})
@@ -37,7 +37,6 @@ class RaceSimulationView(View):
         return probabilities
 
     def _save_final_results(self, finished_participants):
-        """Сохранение итоговых результатов забега"""
         # Сортируем по времени финиша
         sorted_results = sorted(
             finished_participants,
@@ -49,10 +48,7 @@ class RaceSimulationView(View):
             p['id']: i+1 for i, p in enumerate(sorted_results)
         }
         
-        # Сначала удаляем все существующие результаты для этого забега
-        Result.objects.all().delete()
-        
-        # Затем создаем новые записи
+        # Создаем новые записи без удаления старых
         for person_id, place in final_places.items():
             Result.objects.create(
                 person_id=person_id,
@@ -176,9 +172,6 @@ def result_stat(request):
         data = json.load(file)
         n = data[0]['n']
 
-        # Удаляем все существующие результаты перед созданием новых
-        Result.objects.all().delete()
-        
         for _ in range(n):    
             obj = Person.objects.values_list('pk', 'acceleration', 'max_speed')
             vocabulary = {
@@ -202,4 +195,3 @@ def result_stat(request):
 def get_persons(request):
     persons = list(Person.objects.all().values('id', 'color'))
     return JsonResponse({'persons': persons}, safe=False)
-
