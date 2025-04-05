@@ -11,17 +11,22 @@
       <titlerow num="4"></titlerow>
       <titlerow num="5"></titlerow>
       <titlerow num="6"></titlerow> -->
-      <div class="row">
+      <div style="display: grid; grid: 100% / 50% 50%" class="row">
         <maincard :title="'Номер игрока и вероятность по местам'">
           <tableCard></tableCard>
         </maincard>
-      </div>
-      <div class="row">
+
         <maincard :title="'Статистика'">
           <analys></analys>
         </maincard>
+        
+      </div>
+
+      <div class="row">
+        <doublecard></doublecard>
       </div>
     </main>
+    <button @click="fetchPosts">dsbds</button>
   </div>
 </template>
 
@@ -33,7 +38,13 @@ import maincard from './components/maincard.vue';
 import tableCard from './components/tableCard.vue';
 import analys from './components/analys.vue';
 import doublecard from './components/doublecard.vue';
+import axios from 'axios';
 export default {
+  data(){
+    return{
+      responseData: {}
+    }
+  },
   components: {
     player,
     titlerow,
@@ -41,6 +52,18 @@ export default {
     tableCard,
     analys,
     doublecard
+  },
+  methods: {
+    async fetchPosts() {
+        try {
+          const response = await axios.get(`http://localhost:8000/api/race/?t=${Date.now()}`)
+          this.responseData = response.data
+        } catch (e) {
+          alert("Error server")
+        } finally {
+          console.log(this.responseData)
+        }
+      },
   }
 }
 </script>
