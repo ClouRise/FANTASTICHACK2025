@@ -126,9 +126,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 STATIC_URL = 'static/'
-STATIC_ROOT = "/backend/hack"
+STATIC_ROOT = "/backend/hack/static"
 MEDIA_URL = "media/"
-MEDIA_ROOT = "/backend/hack"
+MEDIA_ROOT = "/backend/hack/media"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
