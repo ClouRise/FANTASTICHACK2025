@@ -12,7 +12,7 @@ RUN rm -f /etc/nginx/conf.d/default.conf
 
 COPY --from=build /app/dist /usr/share/nginx/html   
 
-COPY nginx.conf.template /etc/nginx/templates/
+COPY nginx.conf.templates /etc/nginx/templates/
 
 EXPOSE 80
 
