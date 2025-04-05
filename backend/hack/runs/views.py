@@ -1,8 +1,8 @@
 import json
 import random
-from django.http import StreamingHttpResponse, JsonResponse #для потоковой передачи данных
+from django.http import StreamingHttpResponse, JsonResponse, HttpResponse #для потоковой передачи данных
 from django.views import View
-from .models import Person
+from .models import Person, Result
 import time
 
 class RaceSimulationView(View):
@@ -113,3 +113,28 @@ class RaceSimulationView(View):
             
         except Exception as e:
             return JsonResponse({'error': str(e)}, status=500)
+
+
+def result_stat(request):       #1 - id, 2 - место
+    with open('n.json', 'r', encoding='utf-8') as file:
+        data = json.load(file)
+        n = data[0]['n']
+
+        for _ in range(n):    
+            obj = Person.objects.values_list('pk', 'acceleration', 'max_speed')
+
+            vocabulary = {elem[0]: elem[1] + elem[2] + random.randint(-2, 2) for elem in obj}
+            vocabulary = sorted(vocabulary.items(), key=lambda x: (x[1], x[0]), reverse=True)
+    
+            for row, place in zip(vocabulary, range(1, len(vocabulary) + 1)):
+                Result.objects.update_or_create(
+                    person=row[0],
+                    defaults={'value': place}
+                )
+    
+def finisg_stat(request):
+    
+    
+    
+    
+
