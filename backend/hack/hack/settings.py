@@ -43,6 +43,7 @@ INSTALLED_APPS = [
 ]
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
+    "http://87.228.76.2"
 ]
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
@@ -125,6 +126,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 STATIC_URL = 'static/'
+STATIC_ROOT = "/backend/hack"
+MEDIA_URL = "media/"
+MEDIA_ROOT = "/backend/hack"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
