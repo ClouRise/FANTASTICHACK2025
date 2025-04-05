@@ -25,8 +25,8 @@
       <div class="row">
         <doublecard></doublecard>
 
-        <maincard v-on:toggle-race="toggleRace" style="width: 100%;" :buttonRace="true" :title="'Симуляция забега'">
-          <raceMap :racers="racers"></raceMap>
+        <maincard style="width: 100%;" :buttonRace="true" :title="'Симуляция забега'">
+          <raceMap></raceMap>
         </maincard>
       </div>
     </main>
