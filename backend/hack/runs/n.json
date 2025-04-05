@@ -1,0 +1,10 @@
+data: {
+    "time": 0.0, 
+    "racers": {
+        "1": {"distance": 100.0, "speed": 0.0, "finished": false},
+        "2": {"distance": 100.0, "speed": 0.0, "finished": false}, 
+        "3": {"distance": 100.0, "speed": 0.0, "finished": false}, 
+        "4": {"distance": 100.0, "speed": 0.0, "finished": false}, 
+        "5": {"distance": 100.0, "speed": 0.0, "finished": false}, 
+        "6": {"distance": 100.0, "speed": 0.0, "finished": false}}, 
+    "winner": null}
