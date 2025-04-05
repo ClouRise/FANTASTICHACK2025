@@ -1,2 +1,5 @@
 django
 pillow
+django-cors-headers
+psycopg2
+psycopg
