@@ -11,17 +11,22 @@
       <titlerow num="4"></titlerow>
       <titlerow num="5"></titlerow>
       <titlerow num="6"></titlerow> -->
-      <div class="row">
+      <div style="display: grid; grid: 100% / 50% 50%" class="row">
         <maincard :title="'Номер игрока и вероятность по местам'">
           <tableCard></tableCard>
         </maincard>
-      </div>
-      <div class="row">
+
         <maincard :title="'Статистика'">
           <analys></analys>
         </maincard>
+        
+      </div>
+
+      <div class="row">
+        <doublecard></doublecard>
       </div>
     </main>
+    <button @click="fetchPosts">dsbds</button>
   </div>
   <button @click="toggleRace">sdhsdhs</button>
   <p>{{ racers }}</p>
