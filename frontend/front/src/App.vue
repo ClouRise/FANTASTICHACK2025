@@ -15,6 +15,7 @@
         <maincard :title="'Номер игрока и вероятность по местам'">
           <tableCard></tableCard>
         </maincard>
+        <doublecard></doublecard>
       </div>
     </main>
   </div>
@@ -26,12 +27,14 @@ import player from './components/player.vue';
 import titlerow from './components/titlerow.vue'
 import maincard from './components/maincard.vue';
 import tableCard from './components/tableCard.vue';
+import doublecard from './components/doublecard.vue';
 export default {
   components: {
     player,
     titlerow,
     maincard,
-    tableCard
+    tableCard,
+    doublecard
   }
 }
 </script>
