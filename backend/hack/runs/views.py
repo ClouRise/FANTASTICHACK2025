@@ -116,20 +116,23 @@ class RaceSimulationView(View):
 
 
 def result_stat(request):       #1 - id, 2 - место
-    obj = Person.objects.values_list('pk', 'acceleration', 'max_speed')
+    with open('n.json', 'r', encoding='utf-8') as file:
+        data = json.load(file)
+        n = data[0]['n']
 
-    vocabulary = {elem[0]: elem[1] + elem[2] + random.randint(-2, 2) for elem in obj}
-    vocabulary = sorted(vocabulary.items(), key=lambda x: (x[1], x[0]), reverse=True)
+        for _ in range(n):    
+            obj = Person.objects.values_list('pk', 'acceleration', 'max_speed')
+
+            vocabulary = {elem[0]: elem[1] + elem[2] + random.randint(-2, 2) for elem in obj}
+            vocabulary = sorted(vocabulary.items(), key=lambda x: (x[1], x[0]), reverse=True)
     
-    for row, place in zip(vocabulary, range(1, len(vocabulary) + 1)):
-        Result.objects.update_or_create(
-            person=row[0],
-            defaults={'value': place}
-        )
-        
-    results = Result.objects.select_related('person').order_by('value')
-    output = "<br>".join([f"{r.person.pk}: {r.value} место" for r in results])
-    return HttpResponse(output)
+            for row, place in zip(vocabulary, range(1, len(vocabulary) + 1)):
+                Result.objects.update_or_create(
+                    person=row[0],
+                    defaults={'value': place}
+                )
+    
+def finisg_stat(request):
     
     
     
