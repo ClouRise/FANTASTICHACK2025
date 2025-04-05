@@ -1,5 +1,5 @@
 <template>
-    <div style="background-color: black;" class="row">
+    <div style="background-color: black;" class="titlerow">
         <p>{{ num }}</p>
     </div>
 </template>
@@ -15,13 +15,12 @@
 </script>
 
 <style scoped>
-.row{
+.titlerow{
     display: flex;
     justify-content: center;
     align-items: center;
     border: solid 2px white;
     border-radius: 10px;
-    text-align: center;
     font-size: 14pt;
     width: 40px;
     height: 40px;

@@ -16,6 +16,11 @@
           <tableCard></tableCard>
         </maincard>
       </div>
+      <div class="row">
+        <maincard :title="'Статистика'">
+          <analys></analys>
+        </maincard>
+      </div>
     </main>
   </div>
 </template>
@@ -26,12 +31,16 @@ import player from './components/player.vue';
 import titlerow from './components/titlerow.vue'
 import maincard from './components/maincard.vue';
 import tableCard from './components/tableCard.vue';
+import analys from './components/analys.vue';
+import doublecard from './components/doublecard.vue';
 export default {
   components: {
     player,
     titlerow,
     maincard,
-    tableCard
+    tableCard,
+    analys,
+    doublecard
   }
 }
 </script>
@@ -69,5 +78,6 @@ header a{
   width: 100%;
   display: flex;
   flex-direction: row;
+  margin-bottom: 30px;
 }
 </style>
