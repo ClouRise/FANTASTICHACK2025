@@ -8,10 +8,9 @@ from collections import defaultdict
 from django.db.models import Count
 from django.core.cache import cache
 from django.utils import timezone
-
+from rest_framework.decorators import api_view
 class RaceSimulationView(View):
     def _get_cached_probabilities(self):
-        """Кэширование вероятностей на 5 минут"""
         cache_key = 'race_probabilities_cache'
         probabilities = cache.get(cache_key)
         if not probabilities:
@@ -37,13 +36,11 @@ class RaceSimulationView(View):
         return probabilities
 
     def _save_final_results(self, finished_participants):
-        # Сортируем по времени финиша
         sorted_results = sorted(
             finished_participants,
             key=lambda x: x['finished_time']
         )
         
-        # Создаем словарь {id: место}
         final_places = {
             p['id']: i+1 for i, p in enumerate(sorted_results)
         }
