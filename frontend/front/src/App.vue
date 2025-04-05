@@ -13,7 +13,8 @@
           <analys style="width: 300px;"></analys>
         </maincard>
 
-        <maincard :id="3" v-on:toggle-race="toggleRace" style="width: 100%;" :buttonRace="true" :title="'Симуляция забега'">
+        <maincard :id="3" v-on:toggle-race="toggleRace" style="width: 100%;" :buttonRace="true"
+          :title="'Симуляция забега'">
           <raceMap :racers="racers"></raceMap>
         </maincard>
 
@@ -24,6 +25,7 @@
         </maincard>
       </div>
     </main>
+    <button @click="sendT">ewgsndf</button>
   </div>
 </template>
 
@@ -46,13 +48,13 @@ export default {
       loading: false,
       error: null,
       currentTime: 0,
-      racers: { 
-        "1": { "distance": 100, "speed": 0, "finished": true, "color": "#ff0000" }, 
-        "2": { "distance": 100, "speed": 0, "finished": true, "color": "#5c7cfa" }, 
-        "3": { "distance": 100, "speed": 0, "finished": true, "color": "#fcc419" }, 
-        "4": { "distance": 100, "speed": 0, "finished": true, "color": "#94d82d" }, 
-        "5": { "distance": 100, "speed": 0, "finished": true, "color": "#cc5de8" }, 
-        "6": { "distance": 100, "speed": 0, "finished": true, "color": "#ffffff" } 
+      racers: {
+        "1": { "distance": 100, "speed": 0, "finished": true, "color": "#ff0000" },
+        "2": { "distance": 100, "speed": 0, "finished": true, "color": "#5c7cfa" },
+        "3": { "distance": 100, "speed": 0, "finished": true, "color": "#fcc419" },
+        "4": { "distance": 100, "speed": 0, "finished": true, "color": "#94d82d" },
+        "5": { "distance": 100, "speed": 0, "finished": true, "color": "#cc5de8" },
+        "6": { "distance": 100, "speed": 0, "finished": true, "color": "#ffffff" }
       },
       winner: null,
       cancelTokenSource: null,
@@ -70,6 +72,23 @@ export default {
     raceMap
   },
   methods: {
+    async sendT() {
+      try {
+        const response = await axios.post(`http://127.0.0.1:8000/api/persons/1`, {
+          time_of_reaction: 0.2,
+          acceleration: 4,
+          max_speed: 10,
+          coef: 0,
+        }
+        )
+        console.log(response.data)
+      } catch (e) {
+        console.log(e)
+        //alert("Error server");
+      } finally {
+        console.log('end fetch')
+      }
+    },
     async toggleRace() {
       if (this.isRacing) {
         await this.stopRace();
@@ -159,12 +178,21 @@ export default {
     await this.stopRace();
   },
   watch: {
-    finalRes(){
-      if (this.finalRes != null){
-        var finres = {
-        }
-        console.log(this.finalRes)
-        console.log(finres)
+    finalRes() {
+      if (this.finalRes != null) {
+
+        var finres = {}
+        Object.entries(this.finalRes).forEach(([key, value]) => {
+          finres[value] = key
+        })
+
+        store.commit('pushRaceToArr', finres);
+        localStorage.setItem('raced', JSON.stringify(store.state.arrOfRaced));
+
+        // Извлечение объекта из localStorage
+        const retrievedUser = JSON.parse(localStorage.getItem('raced'));
+        console.log(retrievedUser[0]); // "Alex"
+
       }
     }
   }
