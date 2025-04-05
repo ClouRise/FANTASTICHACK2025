@@ -37,6 +37,11 @@ class Person(models.Model):
         ],
     )
 
+    class Meta:
+        verbose_name = 'Человек'
+        verbose_name_plural = 'Люди'
+        ordering = ['id']
+
     def clean(self):
         max_objects = 6
         if Person.objects.count() >= max_objects and not self.pk:
@@ -46,14 +51,29 @@ class Person(models.Model):
         self.full_clean()
         super().save(*args, **kwargs)
 
-
+    def __str__(self):
+        return f'Человек №{self.pk}'
 
 
 class Result(models.Model):
-    person = models.ForeignKey(
+    person = models.OneToOneField(
         Person,
         on_delete=models.PROTECT,
         related_name='result',
+        verbose_name='Человек',
     )
+    
+    value = models.IntegerField(
+        validators=[
+            MinValueValidator(1),
+            MaxValueValidator(6)
+        ]
+    )
+    
+    class Meta:
+        verbose_name = 'Результат',
+        verbose_name_plural = 'Результаты'
 
+    def __str__(self):
+        return f'Результат {self.person.pk}: {self.value}'
     
