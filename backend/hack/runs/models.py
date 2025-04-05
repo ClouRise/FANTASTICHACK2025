@@ -36,6 +36,7 @@ class Person(models.Model):
             MaxValueValidator(0.1),
         ],
     )
+    color = models.CharField(max_length=16)
 
     class Meta:
         verbose_name = 'Человек'

@@ -4,6 +4,8 @@ from django.http import StreamingHttpResponse, JsonResponse, HttpResponse #дл�
 from django.views import View
 from .models import Person, Result
 import time
+from rest_framework import viewsets
+from .serializers import PersonSerializer
 
 class RaceSimulationView(View):
     def get(self, request):
@@ -16,6 +18,7 @@ class RaceSimulationView(View):
                 for partic in partics:
                     partic_data.append({
                         'id': partic.id,
+                        'color': partic.color, 
                         'distance': 0.0, # Пройденная дистанция
                         'speed': 0.0, # Текущая скорость
                         'time_passed': 0.0, # Прошедшее время
@@ -49,7 +52,8 @@ class RaceSimulationView(View):
                             c_state['racers'][data['id']] = {
                                 'distance': 0.0,
                                 'speed': 0.0,
-                                'finished': True
+                                'finished': True,
+                                'color': data['color']
                             }
                             continue
                             
@@ -90,7 +94,8 @@ class RaceSimulationView(View):
                         c_state['racers'][data['id']] = {
                             'distance': round(100 - data['distance'], 2),
                             'speed': round(data['speed'], 2),
-                            'finished': data['finished']
+                            'finished': data['finished'],
+                            'color': data['color']
                         }
                     
                     if finish and not winner:
@@ -145,3 +150,16 @@ def result_stat(request):
             'created': n * len(results),
             'message': f'Создано {n * len(results)} новых записей Result'
         })
+    
+def get_persons(request):
+    persons = list(Person.objects.all().values(
+        'id',
+        'color'  # Добавляем color в вывод
+    ))
+    return JsonResponse({'persons': persons}, safe=False)
+
+
+class PersonViewSet(viewsets.ModelViewSet):
+    queryset = Person.objects.all()
+    serializer_class = PersonSerializer
+    http_method_names = ['get']  # Только чтение если нужно
