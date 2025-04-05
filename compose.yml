@@ -1,5 +1,6 @@
 networks:
   net:
+    driver: bridge
 
 services:
   db:
@@ -18,28 +19,26 @@ services:
       retries: 15
     restart: unless-stopped
     networks:
-      - net
+      - net 
 
   backend:
     build: ./backend/hack
     volumes:
       - ./backend/hack:/app
+      - static_volume:/usr/share/nginx/html/static/
+      - media_volume:/usr/share/nginx/html/media/
     command: gunicorn --pythonpath /app hack.wsgi:application --bind 0.0.0.0:8000
     expose:
       - "8000"
     environment:
       DJANGO_SETTINGS_MODULE: hack.settings
-      POSTGRES_NAME: stats
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: 123
-      POSTGRES_HOST: db
-      POSTGRES_PORT: 5432
     depends_on:
       db:
         condition: service_healthy
     # restart: unless-stopped
     networks:
       - net
+    restart: unless-stopped
 
   frontend:
     build: ./frontend/front
@@ -51,21 +50,23 @@ services:
       - backend
     networks:
       - net
-
   nginx:
     image: nginx:alpine
     ports:
       - "80:80"
     volumes:
       - ./frontend/front/dist:/usr/share/nginx/html
-      - ./backend/hack/static:/usr/share/nginx/html/static
-      - ./backend/hack/media:/usr/share/nginx/html/media
+      - static_volume:/usr/share/nginx/html/static
+      - media_volume:/usr/share/nginx/html/media
     depends_on:
       - backend
       - frontend
     networks:
       - net
+    restart: always
 
 volumes:
   postgres_data:
+  static_volume:
+  media_volume:
   

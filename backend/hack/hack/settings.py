@@ -87,11 +87,11 @@ WSGI_APPLICATION = 'hack.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv('POSTGRES_DB', 'stats'),
-        'USER': os.getenv('POSTGRES_USER', 'postgres'),
-        'PASSWORD': os.getenv('POSTGRES_PASSWORD', '123'),
-        'HOST': os.getenv('POSTGRES_HOST', 'db'),  # Имя сервиса из compose
-        'PORT': os.getenv('POSTGRES_PORT', '5432'),
+        'NAME': os.getenv('DB', 'stats'),
+        'USER': os.getenv('USER', 'postgres'),
+        'PASSWORD': os.getenv('PASSWORD', '123'),
+        'HOST': os.getenv('HOST', '87.228.37.47'),  # Имя сервиса из compose
+        'PORT': os.getenv('PORT', '5432'),
     }
 }
 
