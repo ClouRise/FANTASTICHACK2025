@@ -32,13 +32,15 @@ import titlerow from './components/titlerow.vue'
 import maincard from './components/maincard.vue';
 import tableCard from './components/tableCard.vue';
 import analys from './components/analys.vue';
+import doublecard from './components/doublecard.vue';
 export default {
   components: {
     player,
     titlerow,
     maincard,
     tableCard,
-    analys
+    analys,
+    doublecard
   }
 }
 </script>

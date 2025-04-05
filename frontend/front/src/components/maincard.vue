@@ -24,6 +24,7 @@
         .card{
             display: flex;
             flex-direction: column;
+            padding: 20px;
         }
         .header{
             background-color: #2D2D2D;
@@ -44,7 +45,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 35px;
+            padding: 10px;
             padding-top: 5px;
             padding-bottom: 20px;
             box-sizing: border-box;
