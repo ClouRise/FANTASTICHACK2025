@@ -33,3 +33,4 @@ coverage
 *.sw?
 
 *.tsbuildinfo
+*cat*
