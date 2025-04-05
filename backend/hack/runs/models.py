@@ -36,6 +36,7 @@ class Person(models.Model):
             MaxValueValidator(0.1),
         ],
     )
+    color = models.CharField(max_length=16)
 
     class Meta:
         verbose_name = 'Человек'
@@ -50,13 +51,14 @@ class Person(models.Model):
     def save(self, *args, **kwargs):
         self.full_clean()
         super().save(*args, **kwargs)
+        
 
     def __str__(self):
         return f'Человек №{self.pk}'
 
 
 class Result(models.Model):
-    person = models.OneToOneField(
+    person = models.ForeignKey(
         Person,
         on_delete=models.PROTECT,
         related_name='result',

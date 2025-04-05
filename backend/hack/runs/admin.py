@@ -5,10 +5,11 @@ from .models import Person, Result
 
 @admin.register(Person)
 class PersonAdmin(admin.ModelAdmin):
-    list_display = ['id', 'time_of_reaction', 'acceleration', 'max_speed', 'coef']
+    list_display = ['id', 'time_of_reaction', 'acceleration', 'max_speed', 'coef','color']
     list_filter = ['id']
     search_fields = ['id']
     ordering = ['id']
+    
 
 @admin.register(Result)
 class ResultAdmin(admin.ModelAdmin): #ТОТАЛЬНЫЙ ЗАПРЕТ

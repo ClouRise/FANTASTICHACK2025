@@ -32,6 +32,8 @@
     </main>
     <button @click="fetchPosts">dsbds</button>
   </div>
+  <button @click="toggleRace">sdhsdhs</button>
+  <p>{{ racers }}</p>
 </template>
 
 <script>
@@ -46,8 +48,15 @@ import raceMap from './components/raceMap.vue';
 import axios from 'axios';
 export default {
   data(){
-    return{
-      responseData: {}
+    return {
+      isRacing: false,
+      loading: false,
+      error: null,
+      currentTime: 0,
+      racers: {},
+      winner: null,
+      cancelTokenSource: null,
+      eventSource: null
     }
   },
   components: {
@@ -60,16 +69,91 @@ export default {
     raceMap
   },
   methods: {
-    async fetchPosts() {
-        try {
-          const response = await axios.get(`http://localhost:8000/api/race/?t=${Date.now()}`)
-          this.responseData = response.data
-        } catch (e) {
-          alert("Error server")
-        } finally {
-          console.log(this.responseData)
+    async toggleRace() {
+      if (this.isRacing) {
+        await this.stopRace();
+      } else {
+        await this.startRace();
+      }
+    },
+    
+    async startRace() {
+      try {
+        this.loading = true;
+        this.resetRace();
+        
+        // Создаем новый источник для отмены запроса
+        this.cancelTokenSource = axios.CancelToken.source();
+        
+        // Используем EventSource для получения потоковых данных
+        this.eventSource = new EventSource(`http://localhost:8000/api/race/?t=${Date.now()}`);
+        
+        this.eventSource.onmessage = (event) => {
+          try {
+            const data = JSON.parse(event.data);
+            this.currentTime = data.time;
+            this.racers = data.racers;
+            
+            if (data.winner && !this.winner) {
+              this.winner = data.winner;
+            }
+            
+            if (Object.values(data.racers).every(r => r.finished)) {
+              setTimeout(() => this.stopRace(), 1000);
+            }
+          } catch (e) {
+            console.error('Ошибка обработки данных:', e);
+            this.error = 'Ошибка обработки данных с сервера';
+            this.stopRace();
+          }
+        };
+        
+        this.eventSource.onerror = (e) => {
+          console.error('Ошибка соединения:', e);
+          if (this.isRacing) {
+            this.error = 'Ошибка соединения с сервером';
+            this.stopRace();
+          }
+        };
+        
+        this.isRacing = true;
+        this.loading = false;
+        
+      } catch (e) {
+        console.error('Ошибка запуска:', e);
+        this.error = 'Не удалось начать забег';
+        this.loading = false;
+      }
+    },
+    
+    async stopRace() {
+      try {
+        if (this.cancelTokenSource) {
+          this.cancelTokenSource.cancel('Забег остановлен пользователем');
         }
-      },
+        
+        if (this.eventSource) {
+          this.eventSource.close();
+          this.eventSource = null;
+        }
+        
+        this.isRacing = false;
+        this.loading = false;
+        
+      } catch (e) {
+        console.error('Ошибка остановки:', e);
+      }
+    },
+    
+    resetRace() {
+      this.error = null;
+      this.currentTime = 0;
+      this.racers = {};
+      this.winner = null;
+    }
+  },
+  async beforeUnmount() {
+    await this.stopRace();
   }
 }
 </script>

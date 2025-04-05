@@ -4,6 +4,8 @@ from django.http import StreamingHttpResponse, JsonResponse, HttpResponse #дл�
 from django.views import View
 from .models import Person, Result
 import time
+from rest_framework import viewsets
+from .serializers import PersonSerializer
 
 class RaceSimulationView(View):
     def get(self, request):
@@ -16,6 +18,7 @@ class RaceSimulationView(View):
                 for partic in partics:
                     partic_data.append({
                         'id': partic.id,
+                        'color': partic.color, 
                         'distance': 0.0, # Пройденная дистанция
                         'speed': 0.0, # Текущая скорость
                         'time_passed': 0.0, # Прошедшее время
@@ -49,7 +52,8 @@ class RaceSimulationView(View):
                             c_state['racers'][data['id']] = {
                                 'distance': 0.0,
                                 'speed': 0.0,
-                                'finished': True
+                                'finished': True,
+                                'color': data['color']
                             }
                             continue
                             
@@ -90,7 +94,8 @@ class RaceSimulationView(View):
                         c_state['racers'][data['id']] = {
                             'distance': round(100 - data['distance'], 2),
                             'speed': round(data['speed'], 2),
-                            'finished': data['finished']
+                            'finished': data['finished'],
+                            'color': data['color']
                         }
                     
                     if finish and not winner:
@@ -115,26 +120,46 @@ class RaceSimulationView(View):
             return JsonResponse({'error': str(e)}, status=500)
 
 
-def result_stat(request):       #1 - id, 2 - место
+def result_stat(request):
     with open('n.json', 'r', encoding='utf-8') as file:
         data = json.load(file)
-        n = data[0]['n']
+        n = data[0]['n']  # Получаем количество итераций из JSON
 
         for _ in range(n):    
-            obj = Person.objects.values_list('pk', 'acceleration', 'max_speed')
-
-            vocabulary = {elem[0]: elem[1] + elem[2] + random.randint(-2, 2) for elem in obj}
-            vocabulary = sorted(vocabulary.items(), key=lambda x: (x[1], x[0]), reverse=True)
+            # Получаем всех участников с их характеристиками
+            participants = Person.objects.values_list('pk', 'acceleration', 'max_speed')
+            
+            # Рассчитываем результаты с небольшой случайной вариацией
+            results = {
+                person_id: float(accel) + float(max_speed) + random.randint(-2, 2)
+                for person_id, accel, max_speed in participants
+            }
+            
+            # Сортируем участников по результатам (лучший первый)
+            sorted_results = sorted(results.items(), key=lambda x: (-x[1], x[0]))
     
-            for row, place in zip(vocabulary, range(1, len(vocabulary) + 1)):
-                Result.objects.update_or_create(
-                    person=row[0],
-                    defaults={'value': place}
+            # Создаем новые записи Result для каждого участника
+            for position, (person_id, _) in enumerate(sorted_results, start=1):
+                Result.objects.create(
+                    person_id=person_id,
+                    value=position
                 )
+        
+        return JsonResponse({
+            'status': 'success', 
+            'created': n * len(results),
+            'message': f'Создано {n * len(results)} новых записей Result'
+        })
     
-def finisg_stat(request):
-    
-    
-    
-    
+def get_persons(request):
+    persons = list(Person.objects.all().values(
+        'id',
+        'color'  # Добавляем color в вывод
+    ))
+    return JsonResponse({'persons': persons}, safe=False)
 
+
+class PersonViewSet(viewsets.ModelViewSet):
+    queryset = Person.objects.all()
+    serializer_class = PersonSerializer
+    http_method_names = ['get']  # Только чтение если нужно
