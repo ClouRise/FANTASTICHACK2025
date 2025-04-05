@@ -24,6 +24,7 @@
         .card{
             display: flex;
             flex-direction: column;
+            padding: 20px;
         }
         .header{
             background-color: #2D2D2D;
