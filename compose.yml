@@ -1,42 +1,38 @@
-networks:
-  net:
-
 services:
   backend:
-    build: ./backend/hack/
-    command: gunicorn hack.wsgi:application --bind 0.0.0.0:8000
+    build: ./backend/hack
     volumes:
       - ./backend/hack:/app
-      - static_volume:/backend/hack/static
-      - media_volume:/backend/hack/media
-    restart: unless-stopped
-    networks:
-      - net
-  frontend:
-    build:
-      context: ./frontend/front/
-      dockerfile: Dockerfile
-    volumes:
-      - ./frontend/front/dist:/usr/share/nginx/html
-      - ./frontend/front/nginx.conf:/etc/nginx/conf.d/default.conf
-    networks:
-      - net
-    restart: unless-stopped
-    
-  nginx:
-    image: nginx:stable-alpine
-    ports:
-      - "80:80"
-    volumes:
-      - ./nginx.conf:/etc/nginx/conf.d/default.conf
-    depends_on:
-      - frontend
-      - backend 
-    networks:
-      - net
+    command: gunicorn --pythonpath /app hack.wsgi:application --bind 0.0.0.0:8000
+    expose:
+      - "8000"
+    environment:
+      - DJANGO_SETTINGS_MODULE=hack.settings
     restart: unless-stopped
 
-volumes:
-  static_volume:
-  media_volume:
+  frontend:
+    build: ./frontend/front
+    environment:
+      BACKEND_HOST: backend
+    volumes:
+      - ./frontend/front/dist:/usr/share/nginx/html
+      - ./frontend/front/nginx.conf.template:/etc/nginx/templates/nginx.conf.template
+    expose:
+      - "80"
+    restart: unless-stopped
+
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+      - ./frontend/front/dist:/usr/share/nginx/html
+      - ./backend/hack/static:/usr/share/nginx/html/static
+      - ./backend/hack/media:/usr/share/nginx/html/media
+    depends_on:
+      - backend
+      - frontend
+    restart: unless-stopped
   

@@ -1,15 +1,19 @@
 FROM node:alpine as build
 
-COPY package.json package.json
+WORKDIR /app
+COPY package*.json ./
 RUN npm install
 COPY . .
 RUN npm run build
 
 FROM nginx:stable-alpine 
 
-COPY --from=build /dist /usr/share/nginx/html
-COPY --from=build nginx.conf /etc/nginx/conf.d/default.conf
+RUN rm -f /etc/nginx/conf.d/default.conf
 
-EXPOSE 8080
+COPY --from=build /app/dist /usr/share/nginx/html   
 
-CMD [ "nginx", "-g", "daemon off;" ]
+COPY nginx.conf.template /etc/nginx/templates/
+
+EXPOSE 80
+
+CMD ["nginx", "-g", "daemon off;"]
