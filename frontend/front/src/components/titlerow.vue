@@ -21,9 +21,9 @@
     align-items: center;
     border: solid 2px white;
     border-radius: 10px;
-    font-size: 14pt;
-    width: 40px;
-    height: 40px;
+    font-size: 10pt;
+    width: 30px;
+    height: 30px;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     color: white;
 }

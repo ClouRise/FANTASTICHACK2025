@@ -4,31 +4,23 @@
       <a href="">Характеристики</a>
     </header>
     <main>
-      <!-- <player fillColor="#ff0000" txt="3"></player>
-      <titlerow style="box-shadow: #EFDE22 0px 0px 5px 3px" num="1"></titlerow>
-      <titlerow style="box-shadow: #7A7A81 0px 0px 5px 3px" num="2"></titlerow>
-      <titlerow style="box-shadow: #FF77004D 0px 0px 5px 3px" num="3"></titlerow>
-      <titlerow num="4"></titlerow>
-      <titlerow num="5"></titlerow>
-      <titlerow num="6"></titlerow> -->
-      <div style="" class="row">
-        <maincard :title="'Номер игрока и вероятность по местам'">
+      <div class="row">
+        <maincard :id="1" :title="'Номер игрока и вероятность по местам'">
           <tableCard></tableCard>
         </maincard>
 
-        <maincard :title="'Статистика'">
-          <analys></analys>
+        <maincard :id="2" :title="'Статистика'">
+          <analys style="width: 300px;"></analys>
+        </maincard>
+
+        <maincard :id="3" v-on:toggle-race="toggleRace" style="width: 100%;" :buttonRace="true" :title="'Симуляция забега'">
+          <raceMap :racers="racers"></raceMap>
         </maincard>
 
       </div>
-
       <div class="row">
-        <maincard :title="'Вероятность занять 1ое и 2ое места'">
+        <maincard :id="4" :title="'Вероятность занять 1ое и 2ое места'">
           <doublecard></doublecard>
-        </maincard>
-
-        <maincard v-on:toggle-race="toggleRace" style="width: 100%;" :buttonRace="true" :title="'Симуляция забега'">
-          <raceMap :racers="racers"></raceMap>
         </maincard>
       </div>
     </main>
@@ -181,8 +173,8 @@ body {
 
 header {
   background-color: #1F1F1F;
-  height: 70px;
-  padding-inline: 70px;
+  height: 60px;
+  padding-inline: 60px;
   display: flex;
   justify-content: start;
   align-items: center;
@@ -196,7 +188,7 @@ main {
   background-position-y: -60px;
   background-repeat: no-repeat;
   background-position-x: right;
-  padding: 50px;
+  padding: 5px;
 }
 
 header a {

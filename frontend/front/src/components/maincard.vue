@@ -4,7 +4,7 @@
                 <h2>{{ title }}</h2>
                 <button v-if="buttonRace" @click="this.$emit('toggleRace')">Старт</button>
             </div>
-            <div class="main">
+            <div :style="id==1 ? 'padding-top: 7px; padding-bottom: 8px' : ''" class="main">
                 <slot></slot>
             </div>
         </div>
@@ -20,6 +20,10 @@ export default {
         buttonRace: {
             type: Boolean,
             default: false
+        },
+        id: {
+            type: Number,
+            required: true
         }
     }
 }
@@ -29,7 +33,7 @@ export default {
 .card {
     display: flex;
     flex-direction: column;
-    padding: 20px;
+    padding: 5px;
 }
 
 .header {
@@ -53,7 +57,7 @@ export default {
     display: flex;
     align-items: center;
     padding: 10px;
-    padding-bottom: 15px;
+    padding-block: 5px;
     box-sizing: border-box;
 }
 

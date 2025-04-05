@@ -1,7 +1,7 @@
 <template>
     <div style="display: flex; flex-direction: row; justify-content: start; width: 100%; height: 100%;">
         <article>
-            <div style="height: 30px;" class="cell-table"></div>
+            <div style="height: 25px;" class="cell-table"></div>
             <div class="cell-table"><titlerow style="box-shadow: #EFDE22 0px 0px 5px 3px" num="1"></titlerow></div>
             <div class="cell-table"><titlerow style="box-shadow: #7A7A81 0px 0px 5px 3px" num="2"></titlerow></div>
             <div class="cell-table"><titlerow style="box-shadow: #FF77004D 0px 0px 5px 3px" num="3"></titlerow></div>
@@ -11,15 +11,14 @@
         </article>
         <div style="overflow-x: scroll; display: flex; flex-direction: row;">
             <section>
-                <div style="height: 30px;" class="cell-table"><h3>№1</h3></div>
-                <div style="padding-block: 15px; width: 70px; height: 65px;" class="cell-table"><player :size="50" :wcard="30" :hcard="18" :fontsize="15" :topminus="-10" fillColor="#ff0000" txt="1"></player></div>
-                <div style="padding-block: 15px; width: 70px; height: 65px;" class="cell-table"><player :size="50" :wcard="30" :hcard="18" :fontsize="15" :topminus="-10" fillColor="#ff0000" txt="1"></player></div>
-                <div style="padding-block: 15px; width: 70px; height: 65px;" class="cell-table"><player :size="50" :wcard="30" :hcard="18" :fontsize="15" :topminus="-10" fillColor="#ff0000" txt="1"></player></div>
-                <div style="padding-block: 15px; width: 70px; height: 65px;" class="cell-table"><player :size="50" :wcard="30" :hcard="18" :fontsize="15" :topminus="-10" fillColor="#ff0000" txt="1"></player></div>
-                <div style="padding-block: 15px; width: 70px; height: 65px;" class="cell-table"><player :size="50" :wcard="30" :hcard="18" :fontsize="15" :topminus="-10" fillColor="#ff0000" txt="1"></player></div>
-                <div style="padding-block: 15px; width: 70px; height: 65px; border: none;" class="cell-table"><player :size="50" :wcard="30" :hcard="18" :fontsize="15" :topminus="-10" fillColor="#ff0000" txt="1"></player></div>
+                <div style="height: 25px;" class="cell-table"><h4>№1</h4></div>
+                <div style="padding-block: 15px; width: 70px; height: 55px;" class="cell-table"><player fillColor="#ff0000" txt="1"></player></div>
+                <div style="padding-block: 15px; width: 70px; height: 55px;" class="cell-table"><player fillColor="#ff0000" txt="1"></player></div>
+                <div style="padding-block: 15px; width: 70px; height: 55px;" class="cell-table"><player fillColor="#ff0000" txt="1"></player></div>
+                <div style="padding-block: 15px; width: 70px; height: 55px;" class="cell-table"><player fillColor="#ff0000" txt="1"></player></div>
+                <div style="padding-block: 15px; width: 70px; height: 55px;" class="cell-table"><player fillColor="#ff0000" txt="1"></player></div>
+                <div style="padding-block: 15px; width: 70px; height: 55px; border: none;" class="cell-table"><player fillColor="#ff0000" txt="1"></player></div>
             </section>
-
         </div>
     </div>
 </template>
@@ -36,7 +35,7 @@ export default {
 </script>
 
 <style scoped>
-h3{
+h4{
     font-family: ubuntu-medium;
     color: white;
 }

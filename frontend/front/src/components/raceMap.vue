@@ -87,7 +87,7 @@ export default {
 <style scoped>
 .map {
     width: 100%;
-    height: 500px;
+    height: 356px;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
@@ -100,21 +100,21 @@ export default {
     border-bottom: 1px solid white;
     border-left: 5px solid rgb(221, 221, 221);
     width: 90%;
-    height: 70px;
+    height: 40px;
     display: flex;
     align-items: center;
     justify-content: start;
 }
 .roadroad{
     width: 84%;
-    height: 70px;
+    height: 40px;
     display: flex;
     position: absolute;
     align-items: center;
 }
 .road p {
-    margin-left: 18px;
-    font-size: 40px;
+    margin-left: 10px;
+    font-size: 30px;
     color: rgb(224, 224, 224);
     font-family: rubicDirt;
 }

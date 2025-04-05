@@ -92,7 +92,7 @@ tr{
 }
 td{
     padding-inline: 14px;
-    padding-block: 8px;
+    padding-block: 9px;
     font-family: ubuntu-regular;
     color: white;
 }
