@@ -8,7 +8,7 @@
     export default {
         props:{
             num:{
-                type: Number
+                type: String
             }
         }
     }
@@ -20,10 +20,10 @@
     justify-content: center;
     align-items: center;
     border: solid 2px white;
-    border-radius: 10px;
+    border-radius: 7px;
     font-size: 10pt;
-    width: 30px;
-    height: 30px;
+    width: 25px;
+    height: 25px;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     color: white;
 }

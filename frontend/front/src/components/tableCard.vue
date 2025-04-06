@@ -13,7 +13,7 @@
         </thead>
         <tbody>
             <tr>
-                <td><titlerow style="box-shadow: #EFDE22 0px 0px 5px 3px" num="1"></titlerow></td>
+                <td><titlerow style="box-shadow: #EFDE22 0px 0px 3px 2px" num="1"></titlerow></td>
                 <td><p>15%</p></td>
                 <td><p>15%</p></td>
                 <td><p>15%</p></td>
@@ -22,7 +22,7 @@
                 <td><p>15%</p></td>
             </tr>
             <tr>
-                <td><titlerow style="box-shadow: #7A7A81 0px 0px 5px 3px" num="2"></titlerow></td>
+                <td><titlerow style="box-shadow: #7A7A81 0px 0px 3px 2px" num="2"></titlerow></td>
                 <td><p>15%</p></td>
                 <td><p>15%</p></td>
                 <td><p>15%</p></td>
@@ -31,7 +31,7 @@
                 <td><p>15%</p></td>
             </tr>
             <tr>
-                <td><titlerow style="box-shadow: #FF77004D 0px 0px 5px 3px" num="3"></titlerow></td>
+                <td><titlerow style="box-shadow: #FF77004D 0px 0px 3px 2px" num="3"></titlerow></td>
                 <td><p>15%</p></td>
                 <td><p>15%</p></td>
                 <td><p>15%</p></td>
@@ -91,14 +91,14 @@ tr{
     border-bottom: 1pt solid rgb(46, 46, 46);
 }
 td{
-    padding-inline: 15px;
-    padding-block: 8px;
+    padding-inline: 8px;
+    padding-block: 4.5px;
     font-family: ubuntu-regular;
     color: white;
 }
 th{
-    padding-inline: 15px;
-    padding-block: 8px;
+    padding-inline: 8px;
+    padding-block: 4.5px;
     font-family: ubuntu-regular;
     color: white;
 }

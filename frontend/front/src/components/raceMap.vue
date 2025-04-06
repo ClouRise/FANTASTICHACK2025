@@ -87,7 +87,7 @@ export default {
 <style scoped>
 .map {
     width: 100%;
-    height: 356px;
+    height: 265px;
     display: flex;
     flex-direction: column;
     justify-content: space-around;

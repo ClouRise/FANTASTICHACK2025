@@ -9,10 +9,10 @@
             <div class="cell-table"><titlerow num="5"></titlerow></div>
             <div style="border: none;" class="cell-table"><titlerow num="6"е5></titlerow></div>
         </article>
-        <div style="overflow-x: scroll; display: flex; flex-direction: row;">
+        <div class="scroll-container" style="overflow-x: scroll; display: flex; flex-direction: row;">
             <section v-for="(sect, index) in arr" :key="index">
                 <div style="height: 25px;" class="cell-table"><h4>№{{index + 1}}</h4></div>
-                <div v-for="(elem, index) in sect" :key="index" :style="index == 6 ? 'border: none' : ''" style="padding-block: 15px; width: 60px; height: 55px;" class="cell-table"><player :fillColor="returnColor(elem[0])" :txt="elem[0]"></player></div>
+                <div v-for="(elem, index) in sect" :key="index" :style="index == 6 ? 'border: none' : ''" style="padding-block: 15px; width: 60px; height: 40px;" class="cell-table"><player :fillColor="returnColor(elem[0])" :txt="elem[0]"></player></div>
             </section>
         </div>
     </div>
@@ -73,9 +73,32 @@ article{
     justify-content: center;
     align-items: center;
     border-bottom: 1pt solid rgb(46, 46, 46);
+    height: 40px;
 }
 section{
     display: flex;
     flex-direction: column;
+}
+.scroll-container {
+    overflow-x: auto;
+    display: flex;
+    flex-direction: row;
+}
+.scroll-container::-webkit-scrollbar {
+    height: 8px;
+}
+
+.scroll-container::-webkit-scrollbar-track {
+    background: #2e2e2e; /* Цвет фона дорожки */
+    border-radius: 4px;
+}
+
+.scroll-container::-webkit-scrollbar-thumb {
+    background-color: #888; /* Цвет ползунка */
+    border-radius: 4px;
+}
+
+.scroll-container::-webkit-scrollbar-thumb:hover {
+    background-color: #aaa; /* Цвет при наведении */
 }
 </style>

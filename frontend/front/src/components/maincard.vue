@@ -1,8 +1,16 @@
     <template>
         <div class="card">
-            <div :style="buttonRace ? 'justify-content: space-between;' : 'justify-content: start;'" class="header">
+            <div
+                class="header"
+                :style="{
+                    height: customHeaderHeight ? customHeaderHeight + 'px' : '40px',
+                    justifyContent: buttonRace ? 'space-between' : 'start'
+                }"
+                >
                 <h2>{{ title }}</h2>
+                <slot name="header-extension"></slot>
                 <button v-if="buttonRace" @click="this.$emit('toggleRace')">Старт</button>
+                
             </div>
             <div :style="id==1 ? 'padding-top: 7px; padding-bottom: 8px' : ''" class="main">
                 <slot></slot>
@@ -24,7 +32,11 @@ export default {
         id: {
             type: Number,
             required: true
-        }
+        },
+        customHeaderHeight: {
+            type: Number,
+            default: null
+        },
     }
 }
 </script>
@@ -42,7 +54,7 @@ export default {
     display: flex;
     align-items: center;
     justify-content: start;
-    padding-inline: 35px;
+    padding-inline: 25px;
 }
 
 .header h2 {

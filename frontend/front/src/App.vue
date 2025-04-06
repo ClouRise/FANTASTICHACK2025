@@ -15,6 +15,14 @@
 
         <maincard :id="3" v-on:toggle-race="toggleRace" style="width: 100%;" :buttonRace="true"
           :title="'Симуляция забега'">
+          <template #header-extension>
+            <player fillColor="#ff0000"><titlerow style="height: 20px;" :num="1" /></player>
+            <player fillColor="#5C7CFA"><titlerow style="height: 20px;" :num="1" /></player>
+            <player fillColor="#FCC419"><titlerow style="height: 20px;" :num="1" /></player>
+            <player fillColor="#94D82D"><titlerow style="height: 20px;" :num="1" /></player>
+            <player fillColor="#CC5DE8"><titlerow style="height: 20px;" :num="1" /></player>
+            <player fillColor="#FFFFFF"><titlerow style="height: 20px;" :num="1" /></player>
+          </template>
           <raceMap :racers="racers"></raceMap>
         </maincard>
 

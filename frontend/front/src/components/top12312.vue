@@ -1,12 +1,21 @@
 <template>
     <div>
-        <maincard :title="'Вероятность попадения в топ2 или топ3'" style="display: flex; flex-direction: column;">
+        <maincard
+  :title="'Вероятность попадения в топ2/топ3'"
+  :customHeaderHeight="70"
+  style="display: flex; flex-direction: column; max-width: 160px;"
+>
             <div style="display: flex; justify-content: center; align-items: center;">
                 <div class="top2">
                     <top2></top2>
 
                     <div class="players">
-                        <player></player>
+                        <player fillColor="#ff0000" txt="52%"></player>
+                        <player fillColor="#5C7CFA" txt="2"></player>
+                        <player fillColor="#FCC419" txt="77%"></player>
+                        <player fillColor="#94D82D" txt="4"></player>
+                        <player fillColor="#CC5DE8" txt="5"></player>
+                        <player fillColor="#FFFFFF" txt="15%"></player>
                     </div>
 
                 </div>
@@ -15,7 +24,12 @@
                     <top3></top3>
 
                     <div class="players">
-                        <player></player>
+                        <player fillColor="#ff0000" txt="1"></player>
+                        <player fillColor="#5C7CFA" txt="2"></player>
+                        <player fillColor="#FCC419" txt="3"></player>
+                        <player fillColor="#94D82D" txt="4"></player>
+                        <player fillColor="#CC5DE8" txt="5"></player>
+                        <player fillColor="#FFFFFF" txt="6"></player>
                     </div>
 
                 </div>
@@ -35,7 +49,7 @@ import player from './player.vue';
             maincard,
             top2,
             top3,
-            player
+            player,
         }
         
     }
