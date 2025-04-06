@@ -194,6 +194,7 @@ export default {
         })
         console.log(this.probabilities)
         console.log(this.probabilitiesFinal)
+        
         store.commit('pushRaceToArr', finres);
         store.commit('pushRaceToArrReverce', this.finalRes);
         store.commit('setPresentBase', this.probabilitiesFinal);

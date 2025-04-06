@@ -14,6 +14,7 @@ export default createStore({
     },
     pushRaceToArr(state, object){
       state.arrOfRaced.push(object)
+      console.log(object)
     },
     pushRaceToArrReverce(state, object){
       state.arrOfRacedReverce.push(object)

@@ -1,102 +1,79 @@
 <template>
-
-    <div class="bigcard">
-
-        <div class="card">
-        <button class="close-btn" @click="closeModal">×</button>
+  <div class="container">
+    <h1>Редактирование участников</h1>
     
-        <div class="row">
-            <div class="header">
-            <h2> Игрок </h2>
+    <!-- Список участников с полями для редактирования -->
+    <div class="participants-list">
+      <div v-if="loading" class="loading">Загрузка данных...</div>
+      <div v-else>
+        <div v-for="person in persons" :key="person.id" class="participant-card">
+          <div style=" padding-right: 20px; width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: space-between;">
+            <div class="div-player">
+            <player style="position: relative; top: 10px;" :size="100" :wcard="70" :hcard="30" :fontsize="18" :topminus="-20" :fillColor="person.color" :txt="person.id"></player>
+          </div>
+          <button 
+            @click="updatePerson(person)" 
+            class="update-btn"
+            :disabled="updatingId === person.id"
+          >
+            <span v-if="updatingId === person.id">Сохранение...</span>
+            <span v-else>Сохранить изменения</span>
+          </button>
+          </div>
+          
+          <div class="participant-fields">
+            
+            <div class="field">
+              <label>Время реакции:</label>
+              <input v-model.number="person.time_of_reaction" type="number" step="0.01" min="0.1" max="0.31">
             </div>
-            <div class="main">
-            <player fillColor="#ff0000" txt="1"></player>
-            <player fillColor="#5C7CFA" txt="2"></player>
-            <player fillColor="#FCC419" txt="3"></player>
-            <player fillColor="#94D82D" txt="4"></player>
-            <player fillColor="#CC5DE8" txt="5"></player>
-            <player fillColor="#ffffff" txt="6"></player>
+            
+            <div class="field">
+              <label>Ускорение:</label>
+              <input v-model.number="person.acceleration" type="number" step="0.1" min="0.0" max="5.1">
             </div>
-        </div>
-    
-        <div class="row">
-            <div class="header">
-            <h2> Время реакции на старте, c </h2>
+            
+            <div class="field">
+              <label>Макс. скорость:</label>
+              <input v-model.number="person.max_speed" type="number" step="0.1" min="5.0" max="15.1">
             </div>
-            <div class="main">
-            <inputcomp v-for="(val, i) in reactionTimes" :key="i" v-model="reactionTimes[i]" />
+            
+            <div class="field">
+              <label>Коэффициент:</label>
+              <input v-model.number="person.coef" type="number" step="0.1" min="-2.1" max="0.1">
             </div>
-        </div>
-    
-        <div class="row">
-            <div class="header">
-            <h2> Ускорение, <br> м/c </h2>
-            </div>
-            <div class="main">
-            <inputcomp v-for="(val, i) in accelerations" :key="i" v-model="accelerations[i]" />
-            </div>
-        </div>
-    
-        <div class="row">
-            <div class="header">
-            <h2> Макс. скорость, <br> м/c </h2>
-            </div>
-            <div class="main">
-            <inputcomp v-for="(val, i) in maxSpeeds" :key="i" v-model="maxSpeeds[i]" />
-            </div>
-        </div>
-    
-        <div class="row">
-            <div class="header">
-            <h2> Коэффициент потери скорости </h2>
-            </div>
-            <div class="main">
-            <inputcomp v-for="(val, i) in lossCoefficients" :key="i" v-model="lossCoefficients[i]" />
-            </div>
-        </div>
-    
+          
+          </div>
         
-    
         </div>
-
-        <button class="apply-btn" @click="applyChanges">Применить</button>
-
+      </div>
     </div>
+  </div>
+</template>
 
-  </template>
-  
-  <script>
-  import player from './player.vue';
-  import inputcomp from './inputcomp.vue';
-  import axios from 'axios'
-  export default {
-    components: {
-      player,
-      inputcomp
-    },
-    data() {
-      return {
-        // Эти данные как бы "пришли с бэка"
-        reactionTimes: ['0.2', '0.25', '0.22', '0.24', '0.23', '0.21'],
-        accelerations: ['3.2', '3.4', '3.1', '3.0', '3.3', '3.2'],
-        maxSpeeds: ['6.5', '6.4', '6.6', '6.7', '6.3', '6.2'],
-        lossCoefficients: ['0.1', '0.12', '0.11', '0.09', '0.1', '0.11'],
-        persons: [],
+<script>
+import axios from 'axios';
+import player from './player.vue';
+export default {
+  components: {
+    player
+  },
+  data() {
+    return {
+      persons: [],
       loading: false,
       updatingId: null
-
-      }
-    },
-    created(){
-      this.fetchPersons();
-    },
-    methods: {
-      async fetchPersons() {
+    }
+  },
+  created() {
+    this.fetchPersons();
+  },
+  methods: {
+    async fetchPersons() {
       this.loading = true;
       try {
         const response = await axios.get('http://127.0.0.1:8000/api/persons/');
         this.persons = response.data.persons;
-        console.log(this.persons)
       } catch (error) {
         console.error('Ошибка при загрузке участников:', error);
         alert('Не удалось загрузить данные участников');
@@ -132,108 +109,94 @@
       } finally {
         this.updatingId = null;
       }
-    },
-
-      async applyChanges() {
-
-        const allObj = {
-
-        }
-
-      try {
-        console.log('Сохраняем данные на бэк:');
-        console.log('reactionTimes:', this.reactionTimes);
-        console.log('accelerations:', this.accelerations);
-        console.log('maxSpeeds:', this.maxSpeeds);
-        console.log('lossCoefficients:', this.lossCoefficients);
-        this.$emit('close');
-        const response = await axios.post('http://127.0.0.1:8000/api/persons${person.id}')
-        console.log(response.data)
-      } catch (e) {
-        console.log(e)
-        //alert("Error server");
-      } finally {
-        console.log('end fetch')
-      }
-    },
-      closeModal() {
-        this.$emit('close');
-      }
     }
   }
-  </script>
-  
-  <style scoped>
-  .card {
-    display: flex;
-    flex-direction: row;
-    padding: 20px;
-    border-radius: 10px;
-    position: relative;
-    width: 590px;
-  }
+}
+</script>
+ 
+<style scoped>
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
 
+.participants-list {
+  margin-top: 30px;
+}
 
-  .bigcard{
-    display: flex;
-    flex-direction: column;
-    width: 550px;
-  }
-  
-  .header {
-    background-color: #2D2D2D;
-    height: 70px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    max-width: 120px;
-    min-width: 90px;
-    padding-inline: 5px;
-  }
-  
-  .header h2 {
-    font-family: ubuntu-bold;
-    color: white;
-    font-size: 15px;
-    text-align: center;
-  }
-  
-  .main {
-    background-color: #1D1D1D;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 10px 10px 15px;
-    box-sizing: border-box;
-    flex-direction: column;
-  }
-  
-  .row {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .apply-btn {
-    align-self: flex-end;
-    background-color: #202020;
-    color: white;
-    padding: 10px 18px;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-  }
-  
-  .close-btn {
-    position: absolute;
-    top: 5px;
-    right: 10px;
-    background: none;
-    border: none;
-    color: white;
-    font-size: 24px;
-    cursor: pointer;
-  }
-  </style>
-  
+.participant-card {
+  display: flex;
+  align-items: center;
+  padding: 20px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  display: grid;
+  grid: 100% / 50% 50%;
+  margin-bottom: 20px;
+  background: #fff;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.div-player {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+.participant-fields {
+  flex-grow: 1;
+}
+
+.field {
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.field label {
+  width: 120px;
+  font-family: ubuntu-bold;
+  color: #0c0c0c;
+}
+
+.field input {
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  width: 100px;
+}
+
+.field input[type="color"] {
+  width: 50px;
+  height: 30px;
+  padding: 2px;
+}
+
+.update-btn {
+  padding: 10px 20px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.update-btn:hover {
+  background-color: #45a049;
+}
+
+.update-btn:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+.loading {
+  text-align: center;
+  padding: 30px;
+  font-size: 18px;
+  color: #666;
+}
+</style>
