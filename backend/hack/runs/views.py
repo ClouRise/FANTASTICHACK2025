@@ -101,9 +101,9 @@ class RaceSimulationView(View):
         
         probabilities = {}
         for person_id in prob_dict:
-            total = max(1, sum(prob_dict[person_id].values()))
+            total = sum(prob_dict[person_id].values())
             probabilities[person_id] = {
-                place: round(count/total, 3)
+                place: round((count+1)/(total+6), 3)
                 for place, count in prob_dict[person_id].items()
             }
         
@@ -166,7 +166,6 @@ class RaceSimulationView(View):
                         'time': c_time,
                         'racers': {},
                         'winner': winner,
-                        'probabilities': probabilities,
                         'final_results': final_results
                     }
                     
@@ -175,8 +174,9 @@ class RaceSimulationView(View):
                             c_state['racers'][data['id']] = {
                                 'distance': 0.0,
                                 'speed': 0.0,
-                                'finished': True,
-                                'color': data['color']
+                                'finished': True,   
+                                'color': data['color'],
+                                'probabilities': probabilities if final_results is not None else None
                             }
                             continue
                             
@@ -205,17 +205,19 @@ class RaceSimulationView(View):
                             data['finished'] = True
                             data['finished_time'] = c_time
                             finished_participants.append(data.copy())
-                        
                         c_state['racers'][data['id']] = {
                             'distance': round(100 - data['distance'], 2),
                             'speed': round(data['speed'], 2),
                             'finished': data['finished'],
-                            'color': data['color']
+                            'color': data['color'],
+                            'probabilities': probabilities if final_results is not None else None
                         }
                     
                     if len(finished_participants) == len(partics) and final_results is None:
                         final_results = self._save_final_results(finished_participants)
                         c_state['final_results'] = final_results
+                        c_state['probabilities'] = probabilities
+                        
                     
                     if finished_participants and not winner:
                         winner = random.choice([p['id'] for p in finished_participants]) if len(finished_participants) > 1 else finished_participants[0]['id']
