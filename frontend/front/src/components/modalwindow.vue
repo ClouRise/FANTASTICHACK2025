@@ -147,11 +147,7 @@
         console.log('maxSpeeds:', this.maxSpeeds);
         console.log('lossCoefficients:', this.lossCoefficients);
         this.$emit('close');
-        const response = await axios.post('http://127.0.0.1:8000/api/persons', {
-            email: 'penis@yadenx.ru',
-            password: 'huilo228',
-          }
-        )
+        const response = await axios.post('http://127.0.0.1:8000/api/persons${person.id}')
         console.log(response.data)
       } catch (e) {
         console.log(e)
