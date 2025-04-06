@@ -265,7 +265,7 @@ def result_stat(request):
                 'created': len(participants)
             })
     except Exception as e:
-        return JsonResponse({'error': str(e)}, status=500)
+        return JsonResponse({'error': str(e)}, sttus=500)
 
 def get_persons(request):
     persons = list(Person.objects.all().values('id', 'color'))
