@@ -23,6 +23,7 @@
         <maincard :id="4" :title="'Вероятность занять 1ое и 2ое места'">
           <doublecard></doublecard>
         </maincard>
+        <top12312></top12312>
       </div>
       <div v-if="isModalOpen">
         <div class="overlay" @click="closeModal"></div>
@@ -47,6 +48,7 @@ import raceMap from './components/raceMap.vue';
 import modalwindow from './components/modalwindow.vue';
 import axios from 'axios';
 import store from './store';
+import top12312 from './components/top12312.vue';
 export default {
   data() {
     return {
@@ -77,7 +79,8 @@ export default {
     analys,
     doublecard,
     raceMap,
-    modalwindow
+    modalwindow,
+    top12312
   },
   methods: {
     closeModal(){
