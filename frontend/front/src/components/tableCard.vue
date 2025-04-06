@@ -29,22 +29,22 @@
                     <titlerow style="box-shadow: #EFDE22 0px 0px 3px 2px" num="1"></titlerow>
                 </td>
                 <td>
-                    <p>{{ prob['1']['1'] * 100 }}%</p>
+                    <p>{{ Math.floor(prob['1']['1'] * 100 * 100) / 100  }}%</p>
                 </td>
                 <td>
-                    <p>{{ prob['2']['1'] * 100 }}%</p>
+                    <p>{{ Math.floor(prob['2']['1'] * 100 * 100) / 100 }}%</p>
                 </td>
                 <td>
-                    <p>{{ prob['3']['1'] * 100 }}%</p>
+                    <p>{{ Math.floor(prob['3']['1'] * 100 * 100) / 100  }}%</p>
                 </td>
                 <td>
-                    <p>{{ prob['4']['1'] * 100 }}%</p>
+                    <p>{{ Math.floor(prob['4']['1'] * 100 * 100) / 100  }}%</p>
                 </td>
                 <td>
-                    <p>{{ prob['5']['1'] * 100 }}%</p>
+                    <p>{{ Math.floor(prob['5']['1'] * 100 * 100) / 100  }}%</p>
                 </td>
                 <td>
-                    <p>{{ prob['6']['1'] * 100 }}%</p>
+                    <p>{{ Math.floor(prob['6']['1'] * 100 * 100) / 100  }}%</p>
                 </td>
             </tr>
             <tr>
@@ -52,22 +52,22 @@
                     <titlerow style="box-shadow: #7A7A81 0px 0px 3px 2px" num="2"></titlerow>
                 </td>
                 <td>
-                    <p>{{ prob['1']['2'] * 100 }}%</p>
+                    <p>{{ Math.floor(prob['1']['2'] * 100 * 100) / 100 }}%</p>
                 </td>
                 <td>
-                    <p>{{ prob['2']['2'] * 100 }}%</p>
+                    <p>{{ Math.floor(prob['2']['2'] * 100 * 100) / 100  }}%</p>
                 </td>
                 <td>
-                    <p>{{ prob['3']['2'] * 100 }}%</p>
+                    <p>{{ Math.floor(prob['3']['2'] * 100 * 100) / 100  }}%</p>
                 </td>
                 <td>
-                    <p>{{ prob['4']['2'] * 100 }}%</p>
+                    <p>{{ Math.floor(prob['4']['2'] * 100 * 100) / 100  }}%</p>
                 </td>
                 <td>
-                    <p>{{ prob['5']['2'] * 100 }}%</p>
+                    <p>{{ Math.floor(prob['5']['2'] * 100 * 100) / 100  }}%</p>
                 </td>
                 <td>
-                    <p>{{ prob['6']['2'] * 100 }}%</p>
+                    <p>{{ Math.floor(prob['6']['2'] * 100 * 100) / 100  }}%</p>
                 </td>
             </tr>
             <tr>
@@ -75,22 +75,22 @@
                     <titlerow style="box-shadow: #FF77004D 0px 0px 3px 2px" num="3"></titlerow>
                 </td>
                 <td>
-                    <p>15%</p>
+                    <p>{{ Math.floor(prob['1']['3'] * 100 * 100) / 100  }}%</p>
                 </td>
                 <td>
-                    <p>15%</p>
+                    <p>{{ Math.floor(prob['2']['3'] * 100 * 100) / 100  }}%</p>
                 </td>
                 <td>
-                    <p>15%</p>
+                    <p>{{ Math.floor(prob['3']['3'] * 100 * 100) / 100  }}%</p>
                 </td>
                 <td>
-                    <p>15%</p>
+                    <p>{{ Math.floor(prob['4']['3'] * 100 * 100) / 100  }}%</p>
                 </td>
                 <td>
-                    <p>15%</p>
+                    <p>{{ Math.floor(prob['5']['3'] * 100 * 100) / 100  }}%</p>
                 </td>
                 <td>
-                    <p>15%</p>
+                    <p>{{ Math.floor(prob['6']['3'] * 100 * 100) / 100  }}%</p>
                 </td>
             </tr>
             <tr>
@@ -98,22 +98,22 @@
                     <titlerow num="4"></titlerow>
                 </td>
                 <td>
-                    <p>15%</p>
+                    <p>{{ Math.floor(prob['1']['4'] * 100 * 100) / 100  }}%</p>
                 </td>
                 <td>
-                    <p>15%</p>
+                    <p>{{ Math.floor(prob['2']['4'] * 100 * 100) / 100  }}%</p>
                 </td>
                 <td>
-                    <p>15%</p>
+                    <p>{{ Math.floor(prob['3']['4'] * 100 * 100) / 100  }}%</p>
                 </td>
                 <td>
-                    <p>15%</p>
+                    <p>{{ Math.floor(prob['4']['4'] * 100 * 100) / 100  }}%</p>
                 </td>
                 <td>
-                    <p>15%</p>
+                    <p>{{ Math.floor(prob['5']['4'] * 100 * 100) / 100  }}%</p>
                 </td>
                 <td>
-                    <p>15%</p>
+                    <p>{{ Math.floor(prob['6']['4'] * 100 * 100) / 100  }}%</p>
                 </td>
             </tr>
             <tr>
@@ -121,22 +121,22 @@
                     <titlerow num="5"></titlerow>
                 </td>
                 <td>
-                    <p>15%</p>
+                    <p>{{ Math.floor(prob['1']['5'] * 100 * 100) / 100  }}%</p>
                 </td>
                 <td>
-                    <p>15%</p>
+                    <p>{{ Math.floor(prob['2']['5'] * 100 * 100) / 100  }}%</p>
                 </td>
                 <td>
-                    <p>15%</p>
+                    <p>{{ Math.floor(prob['3']['5'] * 100 * 100) / 100  }}%</p>
                 </td>
                 <td>
-                    <p>15%</p>
+                    <p>{{ Math.floor(prob['4']['5'] * 100 * 100) / 100  }}%</p>
                 </td>
                 <td>
-                    <p>15%</p>
+                    <p>{{ Math.floor(prob['5']['5'] * 100 * 100) / 100  }}%</p>
                 </td>
                 <td>
-                    <p>15%</p>
+                    <p>{{ Math.floor(prob['6']['5'] * 100 * 100) / 100  }}%</p>
                 </td>
             </tr>
             <tr style="border: none;">
@@ -144,22 +144,22 @@
                     <titlerow num="6"></titlerow>
                 </td>
                 <td>
-                    <p>15%</p>
+                    <p>{{ Math.floor(prob['1']['6'] * 100 * 100) / 100  }}%</p>
                 </td>
                 <td>
-                    <p>15%</p>
+                    <p>{{ Math.floor(prob['2']['6'] * 100 * 100) / 100  }}%</p>
                 </td>
                 <td>
-                    <p>15%</p>
+                    <p>{{ Math.floor(prob['3']['6'] * 100 * 100) / 100  }}%</p>
                 </td>
                 <td>
-                    <p>15%</p>
+                    <p>{{ Math.floor(prob['4']['6'] * 100 * 100) / 100  }}%</p>
                 </td>
                 <td>
-                    <p>15%</p>
+                    <p>{{ Math.floor(prob['5']['6'] * 100 * 100) / 100  }}%</p>
                 </td>
                 <td>
-                    <p>15%</p>
+                    <p>{{ Math.floor(prob['6']['6'] * 100 * 100) / 100  }}%</p>
                 </td>
             </tr>
         </tbody>
