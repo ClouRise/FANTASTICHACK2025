@@ -34,3 +34,13 @@ coverage
 
 *.tsbuildinfo
 *cat*
+*.css
+*.svg
+*.js
+*.txt
+*.ico
+*.png
+*.map
+*LICENSE*
+*regular*
+*fontawesome*
