@@ -130,9 +130,9 @@ DATA_UPLOAD_MAX_NUMBER_FIELDS = 5000
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = "/usr/share/nginx/html/static/"
-MEDIA_URL = "/media/"
-MEDIA_ROOT = "/usr/share/nginx/html/media/"
+STATIC_ROOT = '/app/static/'  # Совпадает с volume в compose
+MEDIA_URL = '/media/'
+MEDIA_ROOT = '/app/media/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
