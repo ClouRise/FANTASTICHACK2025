@@ -10,7 +10,7 @@ export default createStore({
       state.globalData = object
     },
     pushRaceToArr(state, object){
-      state.arrOfRaced.prepand(object)
+      state.arrOfRaced.push(object)
     }
   },
   getters: {
