@@ -6,7 +6,7 @@
     <main>
       <div class="row">
         <maincard :id="1" :title="'Номер игрока и вероятность по местам'">
-          <tableCard></tableCard>
+          <tableCard :prob="probabilities"></tableCard>
         </maincard>
 
         <maincard :id="2" :title="'Статистика'">
@@ -68,7 +68,8 @@ export default {
       winner: null,
       cancelTokenSource: null,
       eventSource: null,
-      finalRes: {}
+      finalRes: {},
+      probabilities: {}
     }
   },
   components: {
@@ -110,6 +111,7 @@ export default {
             const data = JSON.parse(event.data);
             this.currentTime = data.time;
             this.racers = data.racers;
+            this.probabilities = data.probabilities
             this.finalRes = data.final_results;
 
             store.commit('setGlobalData', data);
@@ -188,7 +190,6 @@ export default {
 
         // Извлечение объекта из localStorage
         const retrievedUser = JSON.parse(localStorage.getItem('raced'));
-        console.log(retrievedUser[0]); // "Alex"
 
       }
     }
