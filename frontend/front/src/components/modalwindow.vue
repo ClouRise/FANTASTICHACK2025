@@ -68,7 +68,7 @@
   <script>
   import player from './player.vue';
   import inputcomp from './inputcomp.vue';
-  
+  import axios from 'axios'
   export default {
     components: {
       player,
@@ -80,12 +80,68 @@
         reactionTimes: ['0.2', '0.25', '0.22', '0.24', '0.23', '0.21'],
         accelerations: ['3.2', '3.4', '3.1', '3.0', '3.3', '3.2'],
         maxSpeeds: ['6.5', '6.4', '6.6', '6.7', '6.3', '6.2'],
-        lossCoefficients: ['0.1', '0.12', '0.11', '0.09', '0.1', '0.11']
+        lossCoefficients: ['0.1', '0.12', '0.11', '0.09', '0.1', '0.11'],
+        persons: [],
+      loading: false,
+      updatingId: null
+
       }
     },
+    created(){
+      this.fetchPersons();
+    },
     methods: {
+      async fetchPersons() {
+      this.loading = true;
+      try {
+        const response = await axios.get('http://127.0.0.1:8000/api/persons/');
+        this.persons = response.data.persons;
+        console.log(this.persons)
+      } catch (error) {
+        console.error('Ошибка при загрузке участников:', error);
+        alert('Не удалось загрузить данные участников');
+      } finally {
+        this.loading = false;
+      }
+    },
+    
+    async updatePerson(person) {
+      this.updatingId = person.id;
+      try {
+        const dataToUpdate = {
+          time_of_reaction: person.time_of_reaction,
+          acceleration: person.acceleration,
+          max_speed: person.max_speed,
+          coef: person.coef,
+          color: person.color
+        };
+        
+        await axios.put(
+          `http://127.0.0.1:8000/api/persons/${person.id}/`,
+          dataToUpdate
+        );
+        
+        alert('Изменения успешно сохранены!');
+      } catch (error) {
+        console.error('Ошибка при обновлении:', error);
+        
+        // Откатываем изменения в случае ошибки
+        await this.fetchPersons();
+        
+        alert(`Ошибка при сохранении: ${error.response?.data?.error || error.message}`);
+      } finally {
+        this.updatingId = null;
+      }
+    },
+
       async applyChanges() {
       try {
+        console.log('Сохраняем данные на бэк:');
+        console.log('reactionTimes:', this.reactionTimes);
+        console.log('accelerations:', this.accelerations);
+        console.log('maxSpeeds:', this.maxSpeeds);
+        console.log('lossCoefficients:', this.lossCoefficients);
+        this.$emit('close');
         const response = await axios.post('http://127.0.0.1:8000/api/persons', {
             email: 'penis@yadenx.ru',
             password: 'huilo228',
@@ -99,16 +155,6 @@
         console.log('end fetch')
       }
     },
-      applyChanges() {
-        console.log('Сохраняем данные на бэк:');
-        console.log('reactionTimes:', this.reactionTimes);
-        console.log('accelerations:', this.accelerations);
-        console.log('maxSpeeds:', this.maxSpeeds);
-        console.log('lossCoefficients:', this.lossCoefficients);
-        this.$emit('close');
-  
-        // Тут можешь вставить свой API-запрос, если он нужен
-      },
       closeModal() {
         this.$emit('close');
       }
