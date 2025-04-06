@@ -3,11 +3,11 @@
     <header>
       <a href="#" @click.prevent="isModalOpen = true">Характеристики</a>
     </header>
-    
+
     <main>
       <div class="row">
         <maincard :id="1" :title="'Номер игрока и вероятность по местам'">
-          <tableCard :prob="probabilities"></tableCard>
+          <tableCard :prob="probabilitiesFinal"></tableCard>
         </maincard>
 
         <maincard :id="2" :title="'Статистика'">
@@ -17,14 +17,26 @@
         <maincard :id="3" v-on:toggle-race="toggleRace" style="width: 100%;" :buttonRace="true"
           :title="'Симуляция забега'">
           <template #header-extension>
-            
-            <player fillColor="#ff0000"><titlerow style="height: 20px;" :num="1" /></player>
-            <player fillColor="#5C7CFA"><titlerow style="height: 20px;" :num="1" /></player>
-            <player fillColor="#FCC419"><titlerow style="height: 20px;" :num="1" /></player>
-            <player fillColor="#94D82D"><titlerow style="height: 20px;" :num="1" /></player>
-            <player fillColor="#CC5DE8"><titlerow style="height: 20px;" :num="1" /></player>
-            <player fillColor="#FFFFFF"><titlerow style="height: 20px;" :num="1" /></player>
-            
+
+            <player fillColor="#ff0000">
+              <titlerow style="height: 20px;" :num="1" />
+            </player>
+            <player fillColor="#5C7CFA">
+              <titlerow style="height: 20px;" :num="1" />
+            </player>
+            <player fillColor="#FCC419">
+              <titlerow style="height: 20px;" :num="1" />
+            </player>
+            <player fillColor="#94D82D">
+              <titlerow style="height: 20px;" :num="1" />
+            </player>
+            <player fillColor="#CC5DE8">
+              <titlerow style="height: 20px;" :num="1" />
+            </player>
+            <player fillColor="#FFFFFF">
+              <titlerow style="height: 20px;" :num="1" />
+            </player>
+
           </template>
           <raceMap :racers="racers"></raceMap>
         </maincard>
@@ -65,7 +77,7 @@ export default {
       isRacing: false,
       loading: false,
       error: null,
-      isModalOpen:false,
+      isModalOpen: false,
       currentTime: 0,
       racers: {
         "1": { "distance": 100, "speed": 0, "finished": true, "color": "#ff0000" },
@@ -79,7 +91,8 @@ export default {
       cancelTokenSource: null,
       eventSource: null,
       finalRes: {},
-      probabilities: {}
+      probabilities: {},
+      probabilitiesFinal: {"1": {"1": 0, "2": 0, "3": 0, "4": 0, "5": 0, "6": 0}, "5": {"1": 0, "2": 0, "3": 0, "4": 0, "5": 0, "6": 0}, "6": {"1": 0, "2": 0, "3": 0, "4": 0, "5": 0, "6": 0}, "2": {"1": 0, "2": 0, "3": 0, "4": 0, "5": 0, "6": 0}, "3": {"1": 0, "2": 0, "3": 0, "4": 0, "5": 0, "6": 0}, "4": {"1": 0, "2": 0, "3": 0, "4": 0, "5": 0, "6": 0}}
     }
   },
   components: {
@@ -94,7 +107,7 @@ export default {
     top12312
   },
   methods: {
-    closeModal(){
+    closeModal() {
       this.isModalOpen = false;
     },
     async toggleRace() {
@@ -190,6 +203,8 @@ export default {
     finalRes() {
       if (this.finalRes != null) {
 
+        this.probabilitiesFinal = this.probabilities
+
         var finres = {}
         Object.entries(this.finalRes).forEach(([key, value]) => {
           finres[value] = key
@@ -197,7 +212,7 @@ export default {
 
         store.commit('pushRaceToArr', finres);
         store.commit('pushRaceToArrReverce', this.finalRes);
-        
+
         localStorage.setItem('raced', JSON.stringify(store.state.arrOfRaced));
 
         // Извлечение объекта из localStorage
@@ -257,6 +272,7 @@ header a {
   flex-direction: row;
   margin-bottom: 30px;
 }
+
 .overlay {
   position: fixed;
   top: 0;

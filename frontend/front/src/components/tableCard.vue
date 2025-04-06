@@ -29,22 +29,22 @@
                     <titlerow style="box-shadow: #EFDE22 0px 0px 3px 2px" num="1"></titlerow>
                 </td>
                 <td>
-                    <p>15%</p>
+                    <p>{{ prob['1']['1'] * 100 }}%</p>
                 </td>
                 <td>
-                    <p>15%</p>
+                    <p>{{ prob['2']['1'] * 100 }}%</p>
                 </td>
                 <td>
-                    <p>15%</p>
+                    <p>{{ prob['3']['1'] * 100 }}%</p>
                 </td>
                 <td>
-                    <p>15%</p>
+                    <p>{{ prob['4']['1'] * 100 }}%</p>
                 </td>
                 <td>
-                    <p>15%</p>
+                    <p>{{ prob['5']['1'] * 100 }}%</p>
                 </td>
                 <td>
-                    <p>15%</p>
+                    <p>{{ prob['6']['1'] * 100 }}%</p>
                 </td>
             </tr>
             <tr>
@@ -52,22 +52,22 @@
                     <titlerow style="box-shadow: #7A7A81 0px 0px 3px 2px" num="2"></titlerow>
                 </td>
                 <td>
-                    <p>15%</p>
+                    <p>{{ prob['1']['2'] * 100 }}%</p>
                 </td>
                 <td>
-                    <p>15%</p>
+                    <p>{{ prob['2']['2'] * 100 }}%</p>
                 </td>
                 <td>
-                    <p>15%</p>
+                    <p>{{ prob['3']['2'] * 100 }}%</p>
                 </td>
                 <td>
-                    <p>15%</p>
+                    <p>{{ prob['4']['2'] * 100 }}%</p>
                 </td>
                 <td>
-                    <p>15%</p>
+                    <p>{{ prob['5']['2'] * 100 }}%</p>
                 </td>
                 <td>
-                    <p>15%</p>
+                    <p>{{ prob['6']['2'] * 100 }}%</p>
                 </td>
             </tr>
             <tr>
@@ -183,6 +183,12 @@ export default {
                 6: 0
             },
             dateOfPlayers: []
+        }
+    },
+    props: {
+        prob: {
+            type: Object,
+            default: {}
         }
     },
     components: {
