@@ -84,6 +84,21 @@
       }
     },
     methods: {
+      async applyChanges() {
+      try {
+        const response = await axios.post('http://127.0.0.1:8000/api/persons', {
+            email: 'penis@yadenx.ru',
+            password: 'huilo228',
+          }
+        )
+        console.log(response.data)
+      } catch (e) {
+        console.log(e)
+        //alert("Error server");
+      } finally {
+        console.log('end fetch')
+      }
+    },
       applyChanges() {
         console.log('Сохраняем данные на бэк:');
         console.log('reactionTimes:', this.reactionTimes);

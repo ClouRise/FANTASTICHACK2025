@@ -3,7 +3,9 @@ import { createStore } from "vuex";
 export default createStore({
   state: {
     globalData: {},
-    arrOfRaced: []
+    arrOfRaced: [],
+    arrOfRacedReverce: [],
+    probOfPlayers: []
   },
   mutations: {
     setGlobalData(state, object){
@@ -11,6 +13,12 @@ export default createStore({
     },
     pushRaceToArr(state, object){
       state.arrOfRaced.push(object)
+    },
+    pushRaceToArrReverce(state, object){
+      state.arrOfRacedReverce.push(object)
+    },
+    pushProbOfPlayers(state, object){
+      state.probOfPlayers.push(object)
     }
   },
   getters: {
