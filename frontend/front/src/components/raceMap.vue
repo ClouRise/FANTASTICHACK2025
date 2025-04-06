@@ -99,14 +99,14 @@ export default {
     border-top: 1px solid white;
     border-bottom: 1px solid white;
     border-left: 5px solid rgb(221, 221, 221);
-    width: 90%;
+    width: 95%;
     height: 40px;
     display: flex;
     align-items: center;
     justify-content: start;
 }
 .roadroad{
-    width: 84%;
+    width: 94%;
     height: 40px;
     display: flex;
     position: absolute;

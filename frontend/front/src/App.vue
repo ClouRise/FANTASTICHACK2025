@@ -14,6 +14,13 @@
           <analys style="width: 300px;"></analys>
         </maincard>
 
+        <maincard :id="4" :title="'Вероятность занять 1ое и 2ое места'">
+          <doublecard></doublecard>
+        </maincard>
+        <top12312></top12312>
+      </div>
+      <div class="row">
+
         <maincard :id="3" v-on:toggle-race="toggleRace" style="width: 100%;" :buttonRace="true"
           :title="'Симуляция забега'">
           <template #header-extension>
@@ -40,13 +47,6 @@
           </template>
           <raceMap :racers="racers"></raceMap>
         </maincard>
-
-      </div>
-      <div class="row">
-        <maincard :id="4" :title="'Вероятность занять 1ое и 2ое места'">
-          <doublecard></doublecard>
-        </maincard>
-        <top12312></top12312>
       </div>
       <div v-if="isModalOpen">
         <div class="overlay" @click="closeModal"></div>
@@ -209,9 +209,11 @@ export default {
         Object.entries(this.finalRes).forEach(([key, value]) => {
           finres[value] = key
         })
-
+        console.log(this.probabilities)
+        console.log(this.probabilitiesFinal)
         store.commit('pushRaceToArr', finres);
         store.commit('pushRaceToArrReverce', this.finalRes);
+        store.commit('setPresentBase', this.probabilitiesFinal);
 
         localStorage.setItem('raced', JSON.stringify(store.state.arrOfRaced));
 

@@ -12,7 +12,7 @@
         <div class="scroll-container" style="overflow-x: scroll; display: flex; flex-direction: row;">
             <section v-for="(sect, index) in arr" :key="index">
                 <div style="height: 25px;" class="cell-table"><h4>№{{index + 1}}</h4></div>
-                <div v-for="(elem, index) in sect" :key="index" :style="index == 6 ? 'border: none' : ''" style="padding-block: 15px; width: 60px; height: 40px;" class="cell-table"><player :fillColor="returnColor(elem[0])" :txt="elem[0]"></player></div>
+                <div v-for="(elem, index) in sect" :key="index" :style="index == 6 ? 'border: none' : ''" style="padding-block: 15px; width: 60px; height: 45px;" class="cell-table"><player :fillColor="returnColor(elem[0])" :txt="elem[0]"></player></div>
             </section>
         </div>
     </div>
@@ -68,7 +68,7 @@ article{
     margin-left: 15px;
 }
 .cell-table{
-    padding-block: 12px;
+    padding-block: 22px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -85,7 +85,7 @@ section{
     flex-direction: row;
 }
 .scroll-container::-webkit-scrollbar {
-    height: 8px;
+    height: 0px;
 }
 
 .scroll-container::-webkit-scrollbar-track {
