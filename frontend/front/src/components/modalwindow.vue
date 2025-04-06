@@ -135,6 +135,11 @@
     },
 
       async applyChanges() {
+
+        const allObj = {
+
+        }
+
       try {
         console.log('Сохраняем данные на бэк:');
         console.log('reactionTimes:', this.reactionTimes);

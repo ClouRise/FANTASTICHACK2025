@@ -26,28 +26,6 @@
 
         <maincard :id="3" v-on:toggle-race="toggleRace" style="width: 100%;" :buttonRace="true"
           :title="'Симуляция забега'">
-          <template #header-extension>
-
-            <player fillColor="#ff0000">
-              <titlerow style="height: 20px;" :num="1" />
-            </player>
-            <player fillColor="#5C7CFA">
-              <titlerow style="height: 20px;" :num="1" />
-            </player>
-            <player fillColor="#FCC419">
-              <titlerow style="height: 20px;" :num="1" />
-            </player>
-            <player fillColor="#94D82D">
-              <titlerow style="height: 20px;" :num="1" />
-            </player>
-            <player fillColor="#CC5DE8">
-              <titlerow style="height: 20px;" :num="1" />
-            </player>
-            <player fillColor="#FFFFFF">
-              <titlerow style="height: 20px;" :num="1" />
-            </player>
-
-          </template>
           <raceMap :racers="racers"></raceMap>
         </maincard>
       </div>
@@ -245,7 +223,18 @@ body {
   background-image: url(./assets/img/bg.jpeg);
   filter: brightness(60%);
 }
-
+header a{
+  text-decoration: underline solid;
+  text-decoration-color: rgba(255, 255, 255, 0);
+    text-underline-offset: 10px;
+    transition: all 0.25s ease-in-out;
+}
+header a:hover{
+  text-decoration: underline solid;
+  text-decoration-color: rgba(255, 255, 255, 1);
+    text-underline-offset: 3px;
+    transition: all 0.25s ease-in-out;
+}
 header {
   background-color: #1F1F1F;
   height: 60px;
