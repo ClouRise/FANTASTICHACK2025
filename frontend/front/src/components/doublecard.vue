@@ -14,27 +14,27 @@
       <tbody>
           <tr>
               <td style="display: flex; justify-content: center;" ><player  fillColor="#ff0000" txt="1"></player></td>
-              <td v-for="n in 6" :key="n"><p>{{ ( Math.floor(($store.state.precentsOfWin['1']['1'] * $store.state.precentsOfWin[`${n}`]['2']) * 100) * 100) / 100 }}%</p></td>
+              <td v-for="n in 6" :key="n"><p>{{ n == 1 ? '-' : (( Math.floor(($store.state.precentsOfWin['1']['1'] * $store.state.precentsOfWin[`${n}`]['2']) * 100) * 100) / 100) + '%'  }}</p></td>
           </tr>
           <tr>
               <td style="display: flex; justify-content: center;"><player  fillColor="#5C7CFA" txt="2"></player></td>
-              <td v-for="n in 6" :key="n"><p>{{ ( Math.floor(($store.state.precentsOfWin['2']['1'] * $store.state.precentsOfWin[`${n}`]['2']) * 100) * 100) / 100 }}%</p></td>
+              <td v-for="n in 6" :key="n"><p>{{  n == 2 ? '-' : (( Math.floor(($store.state.precentsOfWin['2']['1'] * $store.state.precentsOfWin[`${n}`]['2']) * 100) * 100) / 100) + '%'  }}</p></td>
           </tr>
           <tr>
               <td style="display: flex; justify-content: center;"><player  fillColor="#FCC419" txt="3"></player></td>
-              <td v-for="n in 6" :key="n"><p>{{ ( Math.floor(($store.state.precentsOfWin['3']['1'] * $store.state.precentsOfWin[`${n}`]['2']) * 100) * 100) / 100 }}%</p></td>
+              <td v-for="n in 6" :key="n"><p>{{  n == 3 ? '-' : (( Math.floor(($store.state.precentsOfWin['3']['1'] * $store.state.precentsOfWin[`${n}`]['2']) * 100) * 100) / 100) + '%'  }}</p></td>
           </tr>
           <tr>
               <td style="display: flex; justify-content: center;"><player  fillColor="#94D82D" txt="4"></player></td>
-              <td v-for="n in 6" :key="n"><p>{{ ( Math.floor(($store.state.precentsOfWin['4']['1'] * $store.state.precentsOfWin[`${n}`]['2']) * 100) * 100) / 100 }}%</p></td>
+              <td v-for="n in 6" :key="n"><p>{{  n == 4 ? '-' : (( Math.floor(($store.state.precentsOfWin['4']['1'] * $store.state.precentsOfWin[`${n}`]['2']) * 100) * 100) / 100) + '%'  }}</p></td>
           </tr>
           <tr>
               <td style="display: flex; justify-content: center;"><player  fillColor="#CC5DE8" txt="5"></player></td>
-              <td v-for="n in 6" :key="n"><p>{{ ( Math.floor(($store.state.precentsOfWin['5']['1'] * $store.state.precentsOfWin[`${n}`]['2']) * 100) * 100) / 100 }}%</p></td>
+              <td v-for="n in 6" :key="n"><p>{{  n == 5 ? '-' : (( Math.floor(($store.state.precentsOfWin['5']['1'] * $store.state.precentsOfWin[`${n}`]['2']) * 100) * 100) / 100) + '%'  }}</p></td>
           </tr>
           <tr style="border: none;">
               <td style="display: flex; justify-content: center;"><player  fillColor="#FFFFFF" txt="6"></player></td>
-              <td v-for="n in 6" :key="n"><p>{{ ( Math.floor(($store.state.precentsOfWin['6']['1'] * $store.state.precentsOfWin[`${n}`]['2']) * 100) * 100) / 100 }}%</p></td>
+              <td v-for="n in 6" :key="n"><p>{{  n == 6 ? '-' : (( Math.floor(($store.state.precentsOfWin['6']['1'] * $store.state.precentsOfWin[`${n}`]['2']) * 100) * 100) / 100) + '%'  }}</p></td>
           </tr>
       </tbody>
   </table>

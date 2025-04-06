@@ -194,7 +194,7 @@ export default {
         })
         console.log(this.probabilities)
         console.log(this.probabilitiesFinal)
-        
+
         store.commit('pushRaceToArr', finres);
         store.commit('pushRaceToArrReverce', this.finalRes);
         store.commit('setPresentBase', this.probabilitiesFinal);
@@ -282,6 +282,8 @@ header a {
 
 .modal-container {
   position: fixed;
+  width: 100%;
+  display: flex;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);

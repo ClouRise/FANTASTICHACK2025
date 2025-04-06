@@ -1,17 +1,16 @@
 <template>
   <div class="container">
-    <h1>Редактирование участников</h1>
     
     <!-- Список участников с полями для редактирования -->
     <div class="participants-list">
       <div v-if="loading" class="loading">Загрузка данных...</div>
-      <div v-else>
-        <div v-for="person in persons" :key="person.id" class="participant-card">
+
+        <div v-else v-for="person in persons" :key="person.id" class="participant-card">
           <div style=" padding-right: 20px; width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: space-between;">
             <div class="div-player">
             <player style="position: relative; top: 10px;" :size="100" :wcard="70" :hcard="30" :fontsize="18" :topminus="-20" :fillColor="person.color" :txt="person.id"></player>
           </div>
-          <button 
+          <button :style="'box-shadow: 0 4px 10px 0' + person.color"
             @click="updatePerson(person)" 
             class="update-btn"
             :disabled="updatingId === person.id"
@@ -38,7 +37,7 @@
               <input v-model.number="person.max_speed" type="number" step="0.1" min="5.0" max="15.1">
             </div>
             
-            <div class="field">
+            <div style="margin: 0;" class="field">
               <label>Коэффициент:</label>
               <input v-model.number="person.coef" type="number" step="0.1" min="-2.1" max="0.1">
             </div>
@@ -46,7 +45,7 @@
           </div>
         
         </div>
-      </div>
+
     </div>
   </div>
 </template>
@@ -116,25 +115,32 @@ export default {
  
 <style scoped>
 .container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px;
+  display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
 }
 
 .participants-list {
   margin-top: 30px;
+  display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    width: 100%;
 }
 
 .participant-card {
   display: flex;
   align-items: center;
   padding: 20px;
-  border: 1px solid #e0e0e0;
-  border-radius: 8px;
+  border-radius: 5px;
+  width: 360px;
+  height: 270px;
   display: grid;
   grid: 100% / 50% 50%;
-  margin-bottom: 20px;
-  background: #fff;
+  margin: 20px;
+  background: #d4d4d4;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
@@ -151,13 +157,14 @@ export default {
 
 .field {
   margin-bottom: 10px;
-  display: flex;
-  align-items: center;
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
 }
 
 .field label {
-  width: 120px;
-  font-family: ubuntu-bold;
+  font-size: 15px;
+  font-family: ubuntu-regular;
   color: #0c0c0c;
 }
 
@@ -165,7 +172,7 @@ export default {
   padding: 8px 12px;
   border: 1px solid #ddd;
   border-radius: 4px;
-  width: 100px;
+  width: 100%;
 }
 
 .field input[type="color"] {
@@ -176,16 +183,18 @@ export default {
 
 .update-btn {
   padding: 10px 20px;
-  background-color: #4CAF50;
+  background-color: #000000;
   color: white;
   border: none;
   border-radius: 4px;
   cursor: pointer;
   transition: background-color 0.3s;
+  transition: all 0.2s ease-in-out;
 }
 
 .update-btn:hover {
-  background-color: #45a049;
+  background-color: #303030;
+  transition: all 0.2s ease-in-out;
 }
 
 .update-btn:disabled {

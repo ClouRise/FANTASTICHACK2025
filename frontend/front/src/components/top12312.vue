@@ -24,12 +24,12 @@
                     <top3></top3>
 
                     <div class="players">
-                        <player wcard="40" hcard="18" fillColor="#ff0000" :txt="`${( Math.floor(($store.state.precentsOfWin['1']['1'] +  $store.state.precentsOfWin['1']['2'] + $store.state.precentsOfWin['1']['3']) * 100) * 100) / 100 }%`"></player>
-                        <player wcard="40" hcard="18" fillColor="#5C7CFA" :txt="`${( Math.floor(($store.state.precentsOfWin['2']['1'] +  $store.state.precentsOfWin['2']['2'] + $store.state.precentsOfWin['2']['3']) * 100) * 100) / 100 }%`"></player>
-                        <player wcard="40" hcard="18" fillColor="#FCC419" :txt="`${( Math.floor(($store.state.precentsOfWin['3']['1'] +  $store.state.precentsOfWin['3']['2'] + $store.state.precentsOfWin['3']['3']) * 100) * 100) / 100 }%`"></player>
-                        <player wcard="40" hcard="18" fillColor="#94D82D" :txt="`${( Math.floor(($store.state.precentsOfWin['4']['1'] +  $store.state.precentsOfWin['4']['2'] + $store.state.precentsOfWin['4']['3']) * 100) * 100) / 100 }%`"></player>
-                        <player wcard="40" hcard="18" fillColor="#CC5DE8" :txt="`${( Math.floor(($store.state.precentsOfWin['5']['1'] +  $store.state.precentsOfWin['5']['2'] + $store.state.precentsOfWin['5']['3']) * 100) * 100) / 100 }%`"></player>
-                        <player wcard="40" hcard="18" fillColor="#FFFFFF" :txt="`${( Math.floor(($store.state.precentsOfWin['6']['1'] +  $store.state.precentsOfWin['6']['2'] + $store.state.precentsOfWin['6']['3']) * 100) * 100) / 100 }%`"></player>
+                        <player wcard="40" hcard="18" fillColor="#ff0000" :txt="`${( Math.floor(($store.state.precentsOfWin['1']['1'] +  $store.state.precentsOfWin['1']['2'] + $store.state.precentsOfWin['1']['3']) * 100) * 100 ) / 100 }%`"></player>
+                        <player wcard="40" hcard="18" fillColor="#5C7CFA" :txt="`${( Math.floor(($store.state.precentsOfWin['2']['1'] +  $store.state.precentsOfWin['2']['2'] + $store.state.precentsOfWin['2']['3']) * 100) * 100 ) / 100 }%`"></player>
+                        <player wcard="40" hcard="18" fillColor="#FCC419" :txt="`${( Math.floor(($store.state.precentsOfWin['3']['1'] +  $store.state.precentsOfWin['3']['2'] + $store.state.precentsOfWin['3']['3']) * 100) * 100 ) / 100 }%`"></player>
+                        <player wcard="40" hcard="18" fillColor="#94D82D" :txt="`${( Math.floor(($store.state.precentsOfWin['4']['1'] +  $store.state.precentsOfWin['4']['2'] + $store.state.precentsOfWin['4']['3']) * 100) * 100 ) / 100 }%`"></player>
+                        <player wcard="40" hcard="18" fillColor="#CC5DE8" :txt="`${( Math.floor(($store.state.precentsOfWin['5']['1'] +  $store.state.precentsOfWin['5']['2'] + $store.state.precentsOfWin['5']['3']) * 100) * 100 ) / 100 }%`"></player>
+                        <player wcard="40" hcard="18" fillColor="#FFFFFF" :txt="`${( Math.floor(($store.state.precentsOfWin['6']['1'] +  $store.state.precentsOfWin['6']['2'] + $store.state.precentsOfWin['6']['3']) * 100) * 100 ) / 100 }%`"></player>
                     </div>
 
                 </div>
