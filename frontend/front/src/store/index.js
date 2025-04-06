@@ -10,12 +10,12 @@ export default createStore({
       state.globalData = object
     },
     pushRaceToArr(state, object){
-      state.arrOfRaced.push(object)
+      state.arrOfRaced.prepand(object)
     }
   },
   getters: {
     pushToLocaleStoarge(){
-      
+
     }
   }
 });

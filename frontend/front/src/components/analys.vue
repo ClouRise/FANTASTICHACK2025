@@ -7,17 +7,12 @@
             <div class="cell-table"><titlerow style="box-shadow: #FF77004D 0px 0px 5px 3px" num="3"></titlerow></div>
             <div class="cell-table"><titlerow num="4"></titlerow></div>
             <div class="cell-table"><titlerow num="5"></titlerow></div>
-            <div style="border: none; padding-bottom: 0;" class="cell-table"><titlerow num="6"е5></titlerow></div>
+            <div style="border: none;" class="cell-table"><titlerow num="6"е5></titlerow></div>
         </article>
         <div style="overflow-x: scroll; display: flex; flex-direction: row;">
-            <section>
-                <div style="height: 25px;" class="cell-table"><h4>№1</h4></div>
-                <div style="padding-block: 15px; width: 70px; height: 55px;" class="cell-table"><player fillColor="#ff0000" txt="1"></player></div>
-                <div style="padding-block: 15px; width: 70px; height: 55px;" class="cell-table"><player fillColor="#ff0000" txt="1"></player></div>
-                <div style="padding-block: 15px; width: 70px; height: 55px;" class="cell-table"><player fillColor="#ff0000" txt="1"></player></div>
-                <div style="padding-block: 15px; width: 70px; height: 55px;" class="cell-table"><player fillColor="#ff0000" txt="1"></player></div>
-                <div style="padding-block: 15px; width: 70px; height: 55px;" class="cell-table"><player fillColor="#ff0000" txt="1"></player></div>
-                <div style="padding-block: 15px; width: 70px; height: 55px; border: none;" class="cell-table"><player fillColor="#ff0000" txt="1"></player></div>
+            <section v-for="(sect, index) in arr" :key="index">
+                <div style="height: 25px;" class="cell-table"><h4>№{{index + 1}}</h4></div>
+                <div v-for="(elem, index) in sect" :key="index" :style="index == 6 ? 'border: none' : ''" style="padding-block: 15px; width: 60px; height: 55px;" class="cell-table"><player :fillColor="returnColor(elem[0])" :txt="elem[0]"></player></div>
             </section>
         </div>
     </div>
@@ -26,10 +21,38 @@
 <script>
 import titlerow from './titlerow.vue';
 import player from './player.vue';
+import store from '@/store';
 export default {
     components: {
         titlerow,
         player
+    },
+    data(){
+        return{
+            arr: store.state.arrOfRaced
+        }
+    },
+    methods: {
+        returnColor(id){
+            if(id == 1){
+                return "#ff0000"
+            }
+            if(id == 2){
+                return "#5C7CFA"
+            }
+            if(id == 3){
+                return "#FCC419"
+            }
+            if(id == 4){
+                return "#94D82D"
+            }
+            if(id == 5){
+                return "#CC5DE8"
+            }
+            if(id == 6){
+                return "#FFFFFF"
+            }
+        }
     }
 }
 </script>
