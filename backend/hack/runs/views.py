@@ -89,7 +89,7 @@ class RaceSimulationView(View):
         
         prob_dict = defaultdict(lambda: {1:0, 2:0, 3:0, 4:0, 5:0, 6:0})
         for item in results:
-            prob_dict[item['person']][item['value']] = item['count']
+            prob_dict[item['person']][item['value']] = float(item['count'])
         
         probabilities = {}
         for person_id in prob_dict:
@@ -248,7 +248,7 @@ def result_stat(request):
             for _ in range(n):    
 
                 results = {
-                    p[0]: p[1] + p[2] + random.gauss(0, 1.5) 
+                    p[0]: float(p[1]) + float(p[2]) + random.gauss(0, 1.5) 
                     for p in participants
                 }
                 sorted_results = sorted(results.items(), key=lambda x: (x[1], random.random()), reverse=True)
@@ -265,8 +265,19 @@ def result_stat(request):
                 'created': len(participants)
             })
     except Exception as e:
-        return JsonResponse({'error': str(e)}, sttus=500)
+        return JsonResponse({'error': str(e)}, status=500)
 
 def get_persons(request):
     persons = list(Person.objects.all().values('id', 'color'))
     return JsonResponse({'persons': persons}, safe=False)
+def clear_results(request):
+    count_before = Result.objects.count()
+    
+    deleted_count, _ = Result.objects.all().delete()
+    
+    return JsonResponse({
+        'status': 'success',
+        'message': f'Удалено {deleted_count} записей из Results',
+        'deleted_count': deleted_count,
+        'count_before': count_before
+    })
