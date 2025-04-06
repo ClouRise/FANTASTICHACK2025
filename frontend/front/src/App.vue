@@ -1,19 +1,43 @@
 <template>
   <div class="app">
     <header>
-      <a href="">Характеристики</a>
+      <a href="#" @click.prevent="isModalOpen = true">Характеристики</a>
     </header>
+
     <main>
       <div class="row">
         <maincard :id="1" :title="'Номер игрока и вероятность по местам'">
-          <tableCard></tableCard>
+          <tableCard :prob="probabilitiesFinal"></tableCard>
         </maincard>
 
         <maincard :id="2" :title="'Статистика'">
           <analys style="width: 300px;"></analys>
         </maincard>
 
-        <maincard :id="3" v-on:toggle-race="toggleRace" style="width: 100%;" :buttonRace="true" :title="'Симуляция забега'">
+        <maincard :id="3" v-on:toggle-race="toggleRace" style="width: 100%;" :buttonRace="true"
+          :title="'Симуляция забега'">
+          <template #header-extension>
+
+            <player fillColor="#ff0000">
+              <titlerow style="height: 20px;" :num="1" />
+            </player>
+            <player fillColor="#5C7CFA">
+              <titlerow style="height: 20px;" :num="1" />
+            </player>
+            <player fillColor="#FCC419">
+              <titlerow style="height: 20px;" :num="1" />
+            </player>
+            <player fillColor="#94D82D">
+              <titlerow style="height: 20px;" :num="1" />
+            </player>
+            <player fillColor="#CC5DE8">
+              <titlerow style="height: 20px;" :num="1" />
+            </player>
+            <player fillColor="#FFFFFF">
+              <titlerow style="height: 20px;" :num="1" />
+            </player>
+
+          </template>
           <raceMap :racers="racers"></raceMap>
         </maincard>
 
@@ -22,6 +46,13 @@
         <maincard :id="4" :title="'Вероятность занять 1ое и 2ое места'">
           <doublecard></doublecard>
         </maincard>
+        <top12312></top12312>
+      </div>
+      <div v-if="isModalOpen">
+        <div class="overlay" @click="closeModal"></div>
+        <div class="modal-container">
+          <modalwindow @close="closeModal" />
+        </div>
       </div>
     </main>
   </div>
@@ -38,24 +69,30 @@ import doublecard from './components/doublecard.vue';
 import raceMap from './components/raceMap.vue';
 import modalwindow from './components/modalwindow.vue';
 import axios from 'axios';
+import store from './store';
+import top12312 from './components/top12312.vue';
 export default {
   data() {
     return {
       isRacing: false,
       loading: false,
       error: null,
+      isModalOpen: false,
       currentTime: 0,
-      racers: { 
-        "1": { "distance": 100, "speed": 0, "finished": true, "color": "#ff0000" }, 
-        "2": { "distance": 100, "speed": 0, "finished": true, "color": "#5c7cfa" }, 
-        "3": { "distance": 100, "speed": 0, "finished": true, "color": "#fcc419" }, 
-        "4": { "distance": 100, "speed": 0, "finished": true, "color": "#94d82d" }, 
-        "5": { "distance": 100, "speed": 0, "finished": true, "color": "#cc5de8" }, 
-        "6": { "distance": 100, "speed": 0, "finished": true, "color": "#ffffff" } 
+      racers: {
+        "1": { "distance": 100, "speed": 0, "finished": true, "color": "#ff0000" },
+        "2": { "distance": 100, "speed": 0, "finished": true, "color": "#5c7cfa" },
+        "3": { "distance": 100, "speed": 0, "finished": true, "color": "#fcc419" },
+        "4": { "distance": 100, "speed": 0, "finished": true, "color": "#94d82d" },
+        "5": { "distance": 100, "speed": 0, "finished": true, "color": "#cc5de8" },
+        "6": { "distance": 100, "speed": 0, "finished": true, "color": "#ffffff" }
       },
       winner: null,
       cancelTokenSource: null,
-      eventSource: null
+      eventSource: null,
+      finalRes: {},
+      probabilities: {},
+      probabilitiesFinal: {"1": {"1": 0, "2": 0, "3": 0, "4": 0, "5": 0, "6": 0}, "5": {"1": 0, "2": 0, "3": 0, "4": 0, "5": 0, "6": 0}, "6": {"1": 0, "2": 0, "3": 0, "4": 0, "5": 0, "6": 0}, "2": {"1": 0, "2": 0, "3": 0, "4": 0, "5": 0, "6": 0}, "3": {"1": 0, "2": 0, "3": 0, "4": 0, "5": 0, "6": 0}, "4": {"1": 0, "2": 0, "3": 0, "4": 0, "5": 0, "6": 0}}
     }
   },
   components: {
@@ -65,9 +102,14 @@ export default {
     tableCard,
     analys,
     doublecard,
-    raceMap
+    raceMap,
+    modalwindow,
+    top12312
   },
   methods: {
+    closeModal() {
+      this.isModalOpen = false;
+    },
     async toggleRace() {
       if (this.isRacing) {
         await this.stopRace();
@@ -92,7 +134,10 @@ export default {
             const data = JSON.parse(event.data);
             this.currentTime = data.time;
             this.racers = data.racers;
+            this.probabilities = data.probabilities
+            this.finalRes = data.final_results;
 
+            store.commit('setGlobalData', data);
             if (data.winner && !this.winner) {
               this.winner = data.winner;
             }
@@ -153,6 +198,28 @@ export default {
   },
   async beforeUnmount() {
     await this.stopRace();
+  },
+  watch: {
+    finalRes() {
+      if (this.finalRes != null) {
+
+        this.probabilitiesFinal = this.probabilities
+
+        var finres = {}
+        Object.entries(this.finalRes).forEach(([key, value]) => {
+          finres[value] = key
+        })
+
+        store.commit('pushRaceToArr', finres);
+        store.commit('pushRaceToArrReverce', this.finalRes);
+
+        localStorage.setItem('raced', JSON.stringify(store.state.arrOfRaced));
+
+        // Извлечение объекта из localStorage
+        const retrievedUser = JSON.parse(localStorage.getItem('raced'));
+
+      }
+    }
   }
 }
 </script>
@@ -164,6 +231,7 @@ export default {
   background-image: url(./assets/img/bg.jpg);
   background-attachment: fixed;
   background-size: 110%;
+  position: fixed;
 }
 
 body {
@@ -203,5 +271,24 @@ header a {
   display: flex;
   flex-direction: row;
   margin-bottom: 30px;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 10;
+}
+
+.modal-container {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 11;
+  max-height: 90vh;
 }
 </style>
