@@ -106,7 +106,7 @@ export default {
     justify-content: start;
 }
 .roadroad{
-    width: 94%;
+    width: 92%;
     height: 40px;
     display: flex;
     position: absolute;

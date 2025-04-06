@@ -10,8 +10,11 @@
           <tableCard :prob="probabilitiesFinal"></tableCard>
         </maincard>
 
-        <maincard :id="2" :title="'Статистика'">
-          <analys style="width: 300px;"></analys>
+        <maincard style="width: 300px;" :id="2" :title="'Статистика'">
+          <div v-if="!showInfoAnalys" style="width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; padding: 50px;">
+            <p style="font-family: ubuntu-regular; color: rgb(95, 95, 95); text-align: center; font-size: 15px;">Статистика без первого забега недоступна.</p>
+          </div>
+          <analys v-if="showInfoAnalys" style="width: 100%;"></analys>
         </maincard>
 
         <maincard :id="4" :title="'Вероятность занять 1ое и 2ое места'">
@@ -91,6 +94,7 @@ export default {
       cancelTokenSource: null,
       eventSource: null,
       finalRes: {},
+      showInfoAnalys: false,
       probabilities: {},
       probabilitiesFinal: {"1": {"1": 0, "2": 0, "3": 0, "4": 0, "5": 0, "6": 0}, "5": {"1": 0, "2": 0, "3": 0, "4": 0, "5": 0, "6": 0}, "6": {"1": 0, "2": 0, "3": 0, "4": 0, "5": 0, "6": 0}, "2": {"1": 0, "2": 0, "3": 0, "4": 0, "5": 0, "6": 0}, "3": {"1": 0, "2": 0, "3": 0, "4": 0, "5": 0, "6": 0}, "4": {"1": 0, "2": 0, "3": 0, "4": 0, "5": 0, "6": 0}}
     }
@@ -203,6 +207,7 @@ export default {
     finalRes() {
       if (this.finalRes != null) {
 
+        this.showInfoAnalys = true;
         this.probabilitiesFinal = this.probabilities
 
         var finres = {}
