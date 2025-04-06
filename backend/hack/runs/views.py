@@ -1,16 +1,15 @@
 import json
 import random
-from django.http import StreamingHttpResponse, JsonResponse, HttpResponse
-from django.views import View
-from .models import Person, Result
 import time
 from collections import defaultdict
-from django.db.models import Count
-from django.core.cache import cache
-from django.utils import timezone
-from rest_framework.decorators import api_view
+from django.http import JsonResponse, StreamingHttpResponse
+from django.views import View
 from django.views.decorators.csrf import csrf_exempt
+from django.utils.decorators import method_decorator
 from django.core.exceptions import ValidationError
+from django.db.models import Count
+from .models import Person, Result
+
 class PersonAPI(View):
     def get(self, request, person_id=None):
         try:
@@ -46,7 +45,7 @@ class PersonAPI(View):
                 status=500
             )
 
-    @csrf_exempt
+    @method_decorator(csrf_exempt)
     def dispatch(self, *args, **kwargs):
         return super().dispatch(*args, **kwargs)
 
@@ -83,15 +82,8 @@ class PersonAPI(View):
                 {'error': 'Ошибка сервера', 'details': str(e)},
                 status=500
             )
-class RaceSimulationView(View):
-    def _get_cached_probabilities(self):
-        cache_key = 'race_probabilities_cache'
-        probabilities = cache.get(cache_key)
-        if not probabilities:
-            probabilities = self._calculate_probabilities()
-            cache.set(cache_key, probabilities, 300)
-        return probabilities
 
+class RaceSimulationView(View):
     def _calculate_probabilities(self):
         results = Result.objects.values('person', 'value').annotate(count=Count('value'))
         
@@ -103,7 +95,7 @@ class RaceSimulationView(View):
         for person_id in prob_dict:
             total = sum(prob_dict[person_id].values())
             probabilities[person_id] = {
-                place: round((count+1)/(total+6), 3)
+                place: round((count + 1) / (total + 6), 3)
                 for place, count in prob_dict[person_id].items()
             }
         
@@ -112,14 +104,12 @@ class RaceSimulationView(View):
     def _save_final_results(self, finished_participants):
         sorted_results = sorted(
             finished_participants,
-            key=lambda x: x['finished_time']
+            key=lambda x: (x['finished_time'], random.gauss(0, 0.1)) 
         )
         
         final_places = {
             p['id']: i+1 for i, p in enumerate(sorted_results)
         }
-        
-        # Создаем новые записи без удаления старых
         for person_id, place in final_places.items():
             Result.objects.create(
                 person_id=person_id,
@@ -130,63 +120,70 @@ class RaceSimulationView(View):
 
     def get(self, request):
         try:
-            partics = list(Person.objects.all())
+            participants = list(Person.objects.all())
             
             def generate_race_data():
-                partic_data = []
+                race_data = []
                 finished_participants = []
                 
-                for partic in partics:
-                    partic_data.append({
-                        'id': partic.id,
-                        'color': partic.color,
+                for p in participants:
+                    reaction_time = float(p.time_of_reaction) * random.uniform(0.7, 1.3)
+                    accel = float(p.acceleration) * random.uniform(0.7, 1.3)
+                    max_speed = float(p.max_speed) * random.uniform(0.7, 1.3)
+                    decel = float(p.coef) * random.uniform(0.7, 1.3)
+                    
+                    race_data.append({
+                        'id': p.id,
+                        'color': p.color,
                         'distance': 0.0,
                         'speed': 0.0,
                         'time_passed': 0.0,
                         'phase': 'waiting',
                         'finished': False,
-                        'reaction': float(partic.time_of_reaction) * random.uniform(0.9, 1.1),
-                        'accel': float(partic.acceleration) * random.uniform(0.9, 1.1),
-                        'max_speed': float(partic.max_speed) * random.uniform(0.9, 1.1),
-                        'decel': float(partic.coef) * random.uniform(0.9, 1.1),
-                        'stamina': random.uniform(0.9, 1.0),
-                        'finished_time': None
+                        'reaction': reaction_time,
+                        'accel': accel,
+                        'max_speed': max_speed,
+                        'decel': decel,
+                        'stamina': random.uniform(0.7, 1.0),
+                        'finished_time': None,
+                        'random_factor': random.uniform(0.9, 1.1)
                     })
                 
-                probabilities = self._get_cached_probabilities()
+                probabilities = self._calculate_probabilities()
                 start_time = time.time()
                 interval = 0.1
-                winner = None
-                final_results = None
                 
                 while True:
                     elapsed = time.time() - start_time
-                    c_time = round(elapsed, 1)
-                    c_state = {
-                        'time': c_time,
+                    current_time = round(elapsed, 1)
+                    state = {
+                        'time': current_time,
                         'racers': {},
-                        'winner': winner,
-                        'final_results': final_results
+                        'winner': None,
+                        'final_results': None
                     }
                     
-                    for data in partic_data: 
+                    for data in race_data:
                         if data['finished']:
-                            c_state['racers'][data['id']] = {
-                                'distance': 0.0,
-                                'speed': 0.0,
-                                'finished': True,   
+                            state['racers'][data['id']] = {
+                                'distance': 0,
+                                'speed': 0,
+                                'finished': True,
                                 'color': data['color'],
-                                'probabilities': probabilities if final_results is not None else None
+                                'probabilities': None
                             }
                             continue
                             
                         data['time_passed'] += interval
                         
-                        if data['phase'] == 'waiting': 
+                        if data['phase'] == 'waiting':
                             if data['time_passed'] >= data['reaction']:
                                 data['phase'] = 'accelerating'
                         elif data['phase'] == 'accelerating':
-                            data['speed'] = min(data['speed'] + data['accel'] * interval, data['max_speed'])
+                            data['speed'] = min(
+                                data['speed'] + data['accel'] * interval * data['random_factor'],
+                                data['max_speed']
+                            )
                             if data['speed'] >= data['max_speed']:
                                 data['phase'] = 'const'
                         elif data['phase'] == 'const' and data['distance'] > 80:
@@ -194,38 +191,35 @@ class RaceSimulationView(View):
                         elif data['phase'] == 'decelerating':
                             stamina_effect = 1 - (data['time_passed']/30) * (1 - data['stamina'])
                             data['speed'] = max(
-                                data['speed'] + data['decel'] * interval * stamina_effect,
+                                data['speed'] + data['decel'] * interval * stamina_effect * data['random_factor'],
                                 data['max_speed'] * 0.3
                             )
                         
-                        data['distance'] += data['speed'] * interval * random.uniform(0.98, 1.02)
+                        data['distance'] += data['speed'] * interval * random.uniform(0.95, 1.05)
                         
                         if data['distance'] >= 100 and not data['finished']:
                             data['distance'] = 100
                             data['finished'] = True
-                            data['finished_time'] = c_time
+                            data['finished_time'] = current_time
                             finished_participants.append(data.copy())
-                        c_state['racers'][data['id']] = {
+                            
+                        state['racers'][data['id']] = {
                             'distance': round(100 - data['distance'], 2),
                             'speed': round(data['speed'], 2),
                             'finished': data['finished'],
                             'color': data['color'],
-                            'probabilities': probabilities if final_results is not None else None
+                            'probabilities': probabilities if len(finished_participants) == len(participants) else None
                         }
                     
-                    if len(finished_participants) == len(partics) and final_results is None:
+                    if len(finished_participants) == len(participants):
                         final_results = self._save_final_results(finished_participants)
-                        c_state['final_results'] = final_results
-                        c_state['probabilities'] = probabilities
-                        
+                        state['final_results'] = final_results
+                        state['probabilities'] = probabilities
+                        state['winner'] = next(iter(final_results)) 
                     
-                    if finished_participants and not winner:
-                        winner = random.choice([p['id'] for p in finished_participants]) if len(finished_participants) > 1 else finished_participants[0]['id']
-                        c_state['winner'] = winner
+                    yield f"data: {json.dumps(state)}\n\n"
                     
-                    yield f"data: {json.dumps(c_state)}\n\n"
-                    
-                    if all(data['finished'] for data in partic_data):
+                    if all(data['finished'] for data in race_data):
                         break
                         
                     time.sleep(max(0, interval - (time.time() - start_time) % interval))
@@ -234,36 +228,44 @@ class RaceSimulationView(View):
                 generate_race_data(),
                 content_type='text/event-stream'
             )
-            response['Cache-Control'] = 'no-cache'
+            response['Cache-Control'] = 'no-cache, no-store, must-revalidate'
+            response['Pragma'] = 'no-cache'
+            response['Expires'] = '0'
             return response
             
         except Exception as e:
             return JsonResponse({'error': str(e)}, status=500)
 
 def result_stat(request):
-    with open('n.json', 'r', encoding='utf-8') as file:
-        data = json.load(file)
-        n = data[0]['n']
+    try:
+        with open('n.json', 'r', encoding='utf-8') as file:
+            data = json.load(file)
+            n = data[0]['n']
+            
+            
+            participants = list(Person.objects.values_list('pk', 'acceleration', 'max_speed'))
+            
+            for _ in range(n):    
 
-        for _ in range(n):    
-            obj = Person.objects.values_list('pk', 'acceleration', 'max_speed')
-            vocabulary = {
-                elem[0]: elem[1] + elem[2] + random.randint(-2, 2) 
-                for elem in obj
-            }
-            vocabulary = sorted(vocabulary.items(), key=lambda x: (x[1], x[0]), reverse=True)
-    
-            for row, place in zip(vocabulary, range(1, len(vocabulary) + 1)):
-                Result.objects.create(
-                    person_id=row[0],
-                    value=place
-                )
-        
-        return JsonResponse({
-            'status': 'success',
-            'iterations': n,
-            'created': len(vocabulary)
-        })
+                results = {
+                    p[0]: p[1] + p[2] + random.gauss(0, 1.5) 
+                    for p in participants
+                }
+                sorted_results = sorted(results.items(), key=lambda x: (x[1], random.random()), reverse=True)
+                
+                for (person_id, _), place in zip(sorted_results, range(1, len(participants) + 1)):
+                    Result.objects.create(
+                        person_id=person_id,
+                        value=place
+                    )
+
+            return JsonResponse({
+                'status': 'success',
+                'iterations': n,
+                'created': len(participants)
+            })
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=500)
 
 def get_persons(request):
     persons = list(Person.objects.all().values('id', 'color'))
