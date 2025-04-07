@@ -11,10 +11,10 @@
         </maincard>
 
         <maincard style="width: 300px;" :id="2" :title="'Статистика'">
-          <div v-if="!showInfoAnalys" style="width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; padding: 50px;">
+          <div v-show="!showInfoAnalys" style="width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; padding: 50px;">
             <p style="font-family: ubuntu-regular; color: rgb(95, 95, 95); text-align: center; font-size: 15px;">Статистика без первого забега недоступна.</p>
           </div>
-          <analys v-if="showInfoAnalys" style="width: 100%;"></analys>
+          <analys v-show="showInfoAnalys" style="width: 100%;"></analys>
         </maincard>
 
         <maincard :id="4" :title="'Вероятность занять 1ое и 2ое места'">
@@ -119,7 +119,7 @@ export default {
             this.probabilities = data.probabilities
             this.finalRes = data.final_results;
 
-            store.commit('setGlobalData', data);
+            
             if (data.winner && !this.winner) {
               this.winner = data.winner;
             }
@@ -196,7 +196,6 @@ export default {
         console.log(this.probabilitiesFinal)
 
         store.commit('pushRaceToArr', finres);
-        store.commit('pushRaceToArrReverce', this.finalRes);
         store.commit('setPresentBase', this.probabilitiesFinal);
 
       }

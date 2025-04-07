@@ -10,9 +10,9 @@
             <div style="border: none;" class="cell-table"><titlerow num="6"е5></titlerow></div>
         </article>
         <div class="scroll-container" style="overflow-x: scroll; display: flex; flex-direction: row;">
-            <section v-for="(sect, index) in arr" :key="index">
-                <div style="height: 25px;" class="cell-table"><h4>№{{index + 1}}</h4></div>
-                <div v-for="(elem, ind) in sect" :key="ind" :style="index == 6 ? 'border: none' : ''" style="padding-block: 15px; width: 60px; height: 45px;" class="cell-table"><player :fillColor="returnColor(elem[0])" :txt="elem[0]"></player></div>
+            <section v-for="(sect, id) in arr" :key="id">
+                <div style="height: 25px;" class="cell-table"><h4>№{{id + 1}}</h4></div>
+                <div v-for="(elem, ind) in sect" :key="ind" :style="id == 6 ? 'border: none' : ''" style="padding-block: 15px; width: 60px; height: 45px;" class="cell-table"><player :fillColor="returnColor(elem[0])" :txt="elem[0]"></player></div>
             </section>
         </div>
     </div>
@@ -22,6 +22,7 @@
 import titlerow from './titlerow.vue';
 import player from './player.vue';
 import store from '@/store';
+import { ref } from 'vue';
 export default {
     components: {
         titlerow,
@@ -29,13 +30,12 @@ export default {
     },
     data(){
         return{
-            arr: store.state.arrOfRaced,
-            arr2: []
+            arr: store.state.arrOfRaced
         }
     },
     watch: {
         arr(){
-            this.arr2 = arr
+            console.log('2345')
         }
     },
     methods: {
