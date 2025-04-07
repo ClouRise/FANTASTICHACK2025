@@ -45,7 +45,7 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:8000",
     "http://localhost:5175",
     "http://localhost:5173",
-    "http://87.228.76.2"
+    "http://37.139.62.148"
 ]
 MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
@@ -88,7 +88,7 @@ DATABASES = {
         'NAME': 'stats',
         'USER': 'postgres',
         'PASSWORD': '123',
-        'HOST': 'localhost',
+        'HOST': 'db',
         'PORT': 5432,
     }
 }
@@ -130,9 +130,9 @@ DATA_UPLOAD_MAX_NUMBER_FIELDS = 5000
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = '/usr/share/nginx/html/static'  # Совпадает с volume в compose
+STATIC_ROOT = '/app/static'  # Совпадает с volume в compose
 MEDIA_URL = '/media/'
-MEDIA_ROOT = '/usr/share/nginx/html/media'
+MEDIA_ROOT = '/app/media'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
