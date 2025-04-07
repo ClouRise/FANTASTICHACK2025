@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-0bdl$mlmo(p_qn8^x)v-1*t(pvouv7q47phigtj0$l76*i-oo='
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -42,11 +42,13 @@ INSTALLED_APPS = [
     'runs'
 ]
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:8000",
+    "http://localhost",
     "http://localhost:5175",
+    "http://localhost:5432",
     "http://localhost:5173",
     "http://37.139.62.148"
-]
+]  #меняем корсы
+
 MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'corsheaders.middleware.CorsMiddleware',
@@ -86,9 +88,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'stats',
-        'USER': 'postgres',
+        'USER': 'postgres',    
         'PASSWORD': '123',
-        'HOST': 'db',
+        'HOST': 'db',    #обязательно задать так же, как называется образ в compose
         'PORT': 5432,
     }
 }
@@ -130,9 +132,9 @@ DATA_UPLOAD_MAX_NUMBER_FIELDS = 5000
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = '/app/static'  # Совпадает с volume в compose
+STATIC_ROOT = '/app/static/'  # Совпадает с volume в compose
 MEDIA_URL = '/media/'
-MEDIA_ROOT = '/app/media'
+MEDIA_ROOT = '/app/media/'   #не перестаем исправлять ебучие пути к ненужной хуйне
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field

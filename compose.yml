@@ -24,14 +24,14 @@ services:
     build: ./backend/hack
     volumes:
       - ./backend/hack:/app
-      - ./static_volume:/app/static
-    command: gunicorn --pythonpath /app hack.wsgi:application --bind 0.0.0.0:8000
+      - ./static_volume:/usr/share/nginx/html/static
+    command: gunicorn --pythonpath /app hack.wsgi:application --bind 0.0.0.0:8000 && python manage.py migrate
     expose:
       - "8000"
     environment:
       DJANGO_SETTINGS_MODULE: hack.settings
       ALLOWED_HOSTS: "*"
-      DATABASE_URL: postgres://postgres:123@db:5432/stats
+      DATABASE_URL: postgres://postgres:123@db:5432/stats   #сомнительная настройка
       POSTGRES_NAME: stats
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: 123
@@ -48,6 +48,7 @@ services:
     build: ./frontend/front
     environment:
       - BACKEND_HOST=backend
+      - VUE_APP_API_URL=/
     volumes:
       - ./frontend/front/dist:/usr/share/nginx/html:ro
     depends_on:

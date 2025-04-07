@@ -109,7 +109,7 @@ export default {
         this.cancelTokenSource = axios.CancelToken.source();
 
         // Используем EventSource для получения потоковых данных
-        this.eventSource = new EventSource(`http://localhost:8000/api/race/?t=${Date.now()}`);
+        this.eventSource = new EventSource(`http://localhost/api/race/?t=${Date.now()}`);  //исправил путь, потом поменять
 
         this.eventSource.onmessage = (event) => {
           try {
