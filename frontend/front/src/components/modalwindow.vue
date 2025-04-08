@@ -71,7 +71,7 @@ export default {
     async fetchPersons() {
       this.loading = true;
       try {
-        const response = await axios.get('http://127.0.0.1:8000/api/persons/');
+        const response = await axios.get('http://localhost/api/persons/');
         this.persons = response.data.persons;
       } catch (error) {
         console.error('Ошибка при загрузке участников:', error);
@@ -93,7 +93,7 @@ export default {
         };
         
         await axios.put(
-          `http://127.0.0.1:8000/api/persons/${person.id}/`,
+          `http://localhost/api/persons/${person.id}/`,
           dataToUpdate
         );
         
