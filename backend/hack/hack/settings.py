@@ -46,7 +46,7 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:5175",
     "http://localhost:5432",
     "http://localhost:5173",
-    "http://37.139.62.148"
+    "http://37.139.62.148",
     "http://87.228.79.4"
 ]  #меняем корсы
 
